@@ -29,6 +29,10 @@
       <script>
         // create a firebase reference to the root
         var ref = new Firebase('https://ucdd2bookuno.firebaseio.com')
+<<<<<<< HEAD
+=======
+
+>>>>>>> e2506e591bc6761a19f0b99257206fcb7b81bf25
         // read data from the location todos/tasks, only once
         ref.child('todos/').once('value', function(snapshot){
           var tasks = snapshot.val()
