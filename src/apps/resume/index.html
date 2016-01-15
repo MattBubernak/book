@@ -17,12 +17,12 @@
 
       <div class="container">
 
-        <h1>Tom Yeh</h1>
+        <h1>Matt Bubernak</h1>
 
         <h2>Favorite Programming Languages</h2>
         <ul class="collection">
+          <li class="collection-item">C++</li>
           <li class="collection-item">Javascript</li>
-          <li class="collection-item">Haskell</li>
         </ul>
 
         <h2>Favorite Food</h2>
@@ -34,13 +34,12 @@
       <script>
 
         // create a firebase reference to the root
-        var ref = new Firebase('https://hello-ucdd2.firebaseio.com/')
-
+        var ref = new Firebase('https://bubernak.firebaseio.com/')
         // read data from the location bio/favorite_foods, only once
-        ref.child('bio/favorite_foods').once('value', function(snapshot){
+        ref.child('resume/Education').once('value', function(snapshot){
           var foods = snapshot.val()
           foods.forEach(function(food){
-            $('#foods').append('<li class="collection-item">' + food + '</li>')
+            $('#foods').append('<li class="collection-item">' + food.Name + '</li>')
           })
         })
       </script>
