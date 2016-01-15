@@ -12,6 +12,9 @@
       <!-- Optional theme -->
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
+      <!-- custom css for the website -->
+      <link rel="stylesheet" type="text/css" href="css/main.css">
+
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
@@ -33,31 +36,65 @@
           </div>
         </div>
         <div row>
-          <h2>Favorite Programming Languages</h2>
-          <ul class="collection">
-            <li class="collection-item">C++</li>
-            <li class="collection-item">Javascript</li>
+          <h2>Education</h2>
+          <ul class="collection" id="education">
           </ul>
         </div>
         <div row>
-          <h2>Favorite Food</h2>
-          <ul class="collection" id="foods">
+          <h2>Work History</h2>
+          <ul class="collection" id="jobs">
           </ul>
         </div>
-
+        <div row>
+          <h2>Skills</h2>
+          <ul class="collection" id="skills">
+          </ul>
+        </div>
+        <div row>
+          <h2>Projects</h2>
+          <ul class="collection" id="projects">
+          </ul>
+        </div>
       </div>
 
+      
       <script>
 
         // create a firebase reference to the root
         var ref = new Firebase('https://bubernak.firebaseio.com/')
-        // read data from the location bio/favorite_foods, only once
+        // Grab the Education information
         ref.child('resume/Education').once('value', function(snapshot){
-          var foods = snapshot.val()
-          foods.forEach(function(food){
-            $('#foods').append('<li class="collection-item">' + food.Name + '</li>')
+          var schools = snapshot.val()
+          schools.forEach(function(school){
+            $('#education').append('<li class="collection-item"><p class="item-header">' + school.Name + '</p><p class="item-detail">Graduation: ' + school.Graduation + '</p></li>')
+          })
+        })
+        // Grab the Work information
+        ref.child('resume/Jobs').once('value', function(snapshot){
+          var jobs = snapshot.val()
+          jobs.forEach(function(job){
+            $('#jobs').append('<li class="collection-item"><p class="item-header">' + job.Company + '</p><p class="item-detail">' + job.Title + '</p></li>')
+          })
+        })
+        // Grab the Skills information
+        ref.child('resume/Skills').once('value', function(snapshot){
+          var skills = snapshot.val()
+          skills.forEach(function(skill){
+            $('#skills').append('<li class="collection-item"><p class="item-header">' + skill.Category + '</p><ul id="projects-' + skill.Category + '"></ul></li>');
+            skill.List.forEach(function(item){
+              $('#projects-'+skill.Category).append('<li><p class="item-detail">' + item + '</p></li>')
+            })
+          })
+        })
+        // Grab the projects information
+        ref.child('resume/Projects').once('value', function(snapshot){
+          var projects = snapshot.val()
+          projects.forEach(function(project){
+            $('#projects').append('<li class="collection-item"><p class="item-header">' + project.Name + '</p><p class="item-detail">Platform: ' + project.Platform + '</p><p class="item-detail">URL: <a href="http://' + project.URL + '">' + project.URL + '</a></p></li>')
           })
         })
       </script>
+
+
     </body>
   </html>
