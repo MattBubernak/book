@@ -19,10 +19,21 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
+
     <body>
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
       <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
+
+
+      <nav>
+            <div class="nav-wrapper">
+            <ul id="navbar" class="right hide-on-med-and-down">
+              <li><a href='index.html' style="font-size:20px">Resume</a></li>
+              <li><a href="subscribe.html" style="font-size:20px">Subscribe</a></li>
+                  </ul>
+                </div>
+            </nav>
 
       <div class="container">
         <div row style="margin-top:10px">
@@ -55,6 +66,11 @@
           <ul class="collection" id="projects">
           </ul>
         </div>
+        <div row>
+          <h2>Tasks</h2>
+          <ul class="collection" id="tasks">
+          </ul>
+        </div>
       </div>
 
       
@@ -62,6 +78,8 @@
 
         // create a firebase reference to the root
         var ref = new Firebase('https://bubernak.firebaseio.com/')
+        var refTeam = new Firebase('https://ucdd2bookuno.firebaseio.com')
+        
         // Grab the Education information
         ref.child('resume/Education').once('value', function(snapshot){
           var schools = snapshot.val()
@@ -86,12 +104,58 @@
             })
           })
         })
+
         // Grab the projects information
         ref.child('resume/Projects').once('value', function(snapshot){
           var projects = snapshot.val()
           projects.forEach(function(project){
             $('#projects').append('<li class="collection-item"><p class="item-header">' + project.Name + '</p><p class="item-detail">Platform: ' + project.Platform + '</p><p class="item-detail">URL: <a href="http://' + project.URL + '">' + project.URL + '</a></p></li>')
           })
+        })
+
+        // Grab the tasks information
+        refTeam.child('todos/').once('value', function(snapshot){
+          var tasks = snapshot.val()
+
+          for( var key in tasks){ 
+            task = tasks[key];
+            if (task.assigned == "MattBubernak")
+            {
+              var finalOut = ""
+              var lowPriority = '<div class="card hoverable light-green lighten-1">'
+              var medPriority = '<div class="card hoverable yellow lighten-1">'
+              var higPriority = '<div class="card hoverable red lighten-1">'
+
+              var part1 = '<div class="row">'+
+                '<div class="col s12 m12">'
+              var part2 = 
+                '<div class="card-content center-align black-text">'+
+                '<span class="card-title collection-item '+task.priority + '">'+ task.title +     
+                '</span>'+'<p>Deadline: '+task.deadline+'        <br>Priority: '+ task.priority +
+                '  <br>Type: '+ task.type +'</p>' + 
+        '<div class="chip">'+ task.assigned +'</div>'+
+        '</div>'+     
+                '</div>'+
+        '</div>'+
+                '</div>';
+              if (task.priority == 'Low')
+              {
+                finalOut = part1 + lowPriority + part2
+              }
+              else if (task.priority == 'Medium')
+              {
+                finalOut = part1 + medPriority + part2
+
+              }
+              else if (task.priority == 'High')
+              {
+                finalOut = part1 + higPriority + part2
+
+              }
+              $('#tasks').append(finalOut)
+      
+            }
+          }
         })
       </script>
 
