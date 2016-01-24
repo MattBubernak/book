@@ -114,9 +114,9 @@
         })
 
         // Grab the tasks information
-        refTeam.child('todos/').once('value', function(snapshot){
+        refTeam.child('todos/').on('value', function(snapshot){
           var tasks = snapshot.val()
-
+          $('#tasks').empty()
           for( var key in tasks){ 
             task = tasks[key];
             if (task.assigned == "MattBubernak")

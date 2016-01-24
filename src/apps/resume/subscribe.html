@@ -50,18 +50,32 @@
       </div>
 
       <script>
+        var ref = new Firebase('https://bubernak.firebaseio.com/')
+        var emailsRef = ref.child('resume/Subscribers')
 
+        // and populate "#emails" with these email addresses
         $('#submit').click(function(){
           console.log('the submit button is clicked')
 
-          // TODO: add code to submit an email address to your own Firebase
+          var email = $('#email').val()
+          console.log('the email is', email)
 
+          // TODO: study why push() and set() are both necessary
+          var newEmail = emailsRef.push()
+          newEmail.set(email)
         })
 
-
-        // TODO: add code to pull emaill addresses from your own Firebase,
-        // and populate "#emails" with these email addresses
-
+        // Grab the subscribers information
+        
+        ref.child('resume/Subscribers').on('value', function(snapshot){
+          var subs = snapshot.val()
+          $('#emails').empty()
+          for( var key in subs){ 
+            sub = subs[key];
+            $('#emails').append('<li class="collection-item"><p>' + sub + '</p></li>')
+          }
+        })
+        
 
       </script>
     </body>
