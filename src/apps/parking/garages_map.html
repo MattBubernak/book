@@ -70,16 +70,62 @@ function drawGarages(garages){
   // clear all existing markers (if any)
   markersLayerGroup.clearLayers()
 
+  var minCapacity = Number.MAX_VALUE; 
+  var maxCapacity = Number.MIN_VALUE; 
+  var garageCount = 0; 
+  var medianCapacity = null; 
+
+
+  //console.log("BLA:" + _.max(garages, 'open_spaces').open_spaces)
+  
+  console.log("GARAGES:" + garages)  
+
+_.forEach(garages, function(garage){
+    
+    if (Number(garage.open_spaces) > Number(maxCapacity))
+    {
+      // store name
+      maxCapacity = Number(garage.open_spaces);
+    }
+    if (Number(garage.open_spaces) < Number(minCapacity))
+    {
+      // store name
+      minCapacity = Number(garage.open_spaces);
+    }
+  })
+
+
+  console.log("Max: " + maxCapacity + " Min: " + minCapacity)
+  // TODO: update the legend
+
   _.forEach(garages, function(garage){
     var points = garage.points
     var latlng = [points[0], points[1]]
-
+    var spots =  Number(garage.open_spaces)
     // create a circle layer
-    var circle = L.circle(latlng, 10, {
-        color: 'red',
-        fillColor: '#f03',
+    
+    var ratio = spots/maxCapacity
+    var size = 250 * ratio
+    // Catch any super small lots. 
+    if (size < 10) size = 10; 
+
+    var range = 100 * ratio
+    //var r = (255 * range) / 100
+    //var g = (255 * (100 - range)) / 100 
+    //var b = 0
+
+    var color;
+    var r = (255 * range) / 100;
+    var g = (255 * (100 - range)) / 100;
+    var b = 0;
+    console.log("r:" + r + "g: " + g + "b:" + b)
+    color= "rgb("+r+" ,"+g+","+ b+")"; 
+
+    var circle = L.circle(latlng, size, {
+        color: color,
+        fillColor: color,
         fillOpacity: 0.5
-    }).bindLabel('Label (Change Me)')
+    }).bindLabel('Label (Change Me)' + spots)
 
     // add the circle layer to the makers layer group
     markersLayerGroup.addLayer(circle)
