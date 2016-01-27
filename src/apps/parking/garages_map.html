@@ -102,6 +102,7 @@ _.forEach(garages, function(garage){
     var points = garage.points
     var latlng = [points[0], points[1]]
     var spots =  Number(garage.open_spaces)
+    var name = garage.friendlyName
     // create a circle layer
     
     // Compare this data point to the min/max. 
@@ -122,7 +123,7 @@ _.forEach(garages, function(garage){
         color: color,
         fillColor: color,
         fillOpacity: 0.5
-    }).bindLabel('Label (Change Me)' + spots)
+    }).bindLabel(name + " contains " + spots + " spots.")
 
     // add the circle layer to the makers layer group
     markersLayerGroup.addLayer(circle)
