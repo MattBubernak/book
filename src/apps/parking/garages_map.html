@@ -26,6 +26,10 @@
 
         <h1>Garages Map</h1>
         <div id="map" style="height:500px"></div>
+        <h1>Information at a glance</h1>
+        <h3>Open Spots: <div id="Total">Loading...</div></h3>
+        <h3>Largest Lot:<div id="Largest">Loading...</div></h3>
+        <h3>Smallest Lot:<div id="Smallest">Loading...</div></h3>
 
       </div>
 
@@ -37,7 +41,7 @@ var ref = new Firebase('https://publicdata-parking.firebaseio.com');
 var data
 
 // read data from the location san_francisco/garages, only once
-ref.child('san_francisco/garages').once('value', function(snapshot){
+ref.child('san_francisco/garages').on('value', function(snapshot){
   data = snapshot.val()
   console.log('data is loaded', data)
 
@@ -71,7 +75,8 @@ function drawGarages(garages){
   markersLayerGroup.clearLayers()
 
   var minCapacity = Number.MAX_VALUE; 
-  var maxCapacity = Number.MIN_VALUE; 
+  var maxCapacity = Number.MIN_VALUE;
+  var totalSpots = 0;  
   var garageCount = 0; 
   var medianCapacity = null; 
 
@@ -81,22 +86,26 @@ function drawGarages(garages){
   console.log("GARAGES:" + garages)  
 
 _.forEach(garages, function(garage){
-    
-    if (Number(garage.open_spaces) > Number(maxCapacity))
+    var spots = Number(garage.open_spaces);
+    if (spots > Number(maxCapacity))
     {
       // store name
-      maxCapacity = Number(garage.open_spaces);
+      maxCapacity = spots;
     }
-    if (Number(garage.open_spaces) < Number(minCapacity))
+    if (spots < Number(minCapacity))
     {
       // store name
-      minCapacity = Number(garage.open_spaces);
+      minCapacity = spots;
     }
+    totalSpots += spots;
   })
 
 
   console.log("Max: " + maxCapacity + " Min: " + minCapacity)
   // TODO: update the legend
+  document.getElementById('Largest').innerHTML = maxCapacity
+  document.getElementById('Smallest').innerHTML = minCapacity
+  document.getElementById('Total').innerHTML = totalSpots
 
   _.forEach(garages, function(garage){
     var points = garage.points
