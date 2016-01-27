@@ -104,22 +104,19 @@ _.forEach(garages, function(garage){
     var spots =  Number(garage.open_spaces)
     // create a circle layer
     
+    // Compare this data point to the min/max. 
     var ratio = spots/maxCapacity
+    
+    // Some fancy math for determing the size of the circle. Also a check to modify any that would be too small. 
     var size = 250 * ratio
-    // Catch any super small lots. 
     if (size < 10) size = 10; 
 
-    var range = 100 * ratio
-    //var r = (255 * range) / 100
-    //var g = (255 * (100 - range)) / 100 
-    //var b = 0
-
-    var color;
-    var r = (255 * range) / 100;
-    var g = (255 * (100 - range)) / 100;
+    // Some fancy math for determing a color range(Too easy @andrew)
+    var range = 100 * (1-ratio)
+    var r = Math.round((255 * range) / 100);
+    var g = Math.round((255 * (100 - range)) / 100);
     var b = 0;
-    console.log("r:" + r + "g: " + g + "b:" + b)
-    color= "rgb("+r+" ,"+g+","+ b+")"; 
+    var color= "rgb("+r+" ,"+g+","+ b+")"; 
 
     var circle = L.circle(latlng, size, {
         color: color,
