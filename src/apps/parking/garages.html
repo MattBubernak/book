@@ -26,8 +26,18 @@
       <div class="container">
 
         <h1>Garages</h1>
-        <!-- <ul class="collection" id="garages"> -->
-        <!-- </ul> -->
+
+             <div class="container" style="padding-top:30px; margin-bottom:-10px">
+                <div class="row">
+                   <!--  <div class="col s1 pull-s2"> <span class="flow-text"> <font size="6"> <b> Tasks </b> </font> </span> </div>
+ -->
+                    <div class="col push-s12">
+                        <a class="waves-effect waves-light btn modal-trigger" style="width:100px;right:50px;" href="#modal1">Filter</a>
+                    </div>
+
+                </div>
+            </div>
+
 
         <ul class="collapsible" data-collapsible="expandable", id="garages"></ul>
 
@@ -60,7 +70,7 @@
            // if(garage["open_spaces"] != 0){
                 // $('#garages').append(
                   var html = '<li class="" xmlns="http://www.w3.org/1999/html"> \
-                <div class="collapsible-header"><i class="material-icons">label_outline</i>' + garage["friendlyName"] + '</div>'  + 
+                <div class="collapsible-header"><i class="material-icons">place</i>' + garage["friendlyName"] + '</div>'  + 
                 '<div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 5px; padding-left: 50px; margin-bottom: 0px;">'
                         + 'Open_spaces:\t' + garage["open_spaces"] + '<br>'
                         + 'Total_spaces:\t' + garage["total_spaces"] + '<br>'
