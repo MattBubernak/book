@@ -43,9 +43,11 @@
             <h5><div style="font-weight:bold">Open Spots:</div> <div id="Total">Loading...</div></h5>
             <h5><div style="font-weight:bold">Largest Lot:</div><div id="Largest">Loading...</div></h5>
             <h5><div style="font-weight:bold">Smallest Lot:</div><div id="Smallest">Loading...</div></h5>
+            <h5><div style="font-weight:bold">Most Expensive Lot:</div><div id="Expensive">Loading...</div></h5>
+            <h5><div style="font-weight:bold">Cheapest Lot:</div><div id="Cheapest">Loading...</div></h5>
           </div>
           <div class ="col s6">
-            <h2>Graph Key</h2>
+            <h2>Graph Legend</h2>
             <h5><div style="font-weight:bold">Available Spots:</div> Indicated by circle size</h5>
             <h5><div style="font-weight:bold">Cost:</div> Indicated by color scale(green = low, red = high)</h5>
           </div>
@@ -63,7 +65,7 @@ var ref = new Firebase('https://publicdata-parking.firebaseio.com');
 var data
 
 // read data from the location san_francisco/garages, only once
-ref.child('san_francisco/garages').on('value', function(snapshot){
+ref.child('san_francisco/garages').once('value', function(snapshot){
   data = snapshot.val()
 
   var garages = _.filter(data, function(d){
@@ -102,33 +104,38 @@ function drawGarages(garages){
   var totalSpots = 0;  
   var garageCount = 0; 
 
-_.forEach(garages, function(garage){
-    var spots = Number(garage.open_spaces);
-    var todayCost = Number(garage.rates[today.getDay()].RATE);
-    if (spots > maxCapacity)
-    {
-      maxCapacity = spots;
-    }
-    if (spots < minCapacity)
-    {
-      minCapacity = spots;
-    }
-    if (todayCost > maxCost)
-    {
-      maxCost = todayCost
-    }
-    if (todayCost < minCost)
-    {
-      minCost = todayCost
-    }
-    totalSpots += spots;
-  })
+  // Reduce and Map to get the spot information using LoDash. #PPL #GETONMYLEVEL #DefinitelyNotTheMostEfficientWayToDoThis
 
+  var biggestSpot = _.reduce(garages, function(prev,cur) {
+    return Number(prev.open_spaces) > Number(cur.open_spaces) ? prev : cur
+  },{friendlyName:"null",open_spaces:-10})
+  maxCapacity = Number(biggestSpot.open_spaces)
+  
+  var smallestLot = _.reduce(garages, function(prev,cur) {
+    return Number(prev.open_spaces) < Number(cur.open_spaces) ? prev : cur
+  },{friendlyName:"null",open_spaces:100000})
+  minCapacity = Number(smallestLot.open_spaces)
+
+  var costliestLot = _.reduce(garages, function(prev,cur) {
+    return Number(prev.rates[today.getDay()].RATE) > Number(cur.rates[today.getDay()].RATE) ? prev : cur
+  },garages[0])
+  maxCost = Number(costliestLot.rates[today.getDay()].RATE)
+  
+  var cheapestLot = _.reduce(garages, function(prev,cur) {
+    return Number(prev.rates[today.getDay()].RATE) < Number(cur.rates[today.getDay()].RATE) ? prev : cur
+  },garages[0])
+  minCost = Number(cheapestLot.rates[today.getDay()].RATE)
+
+  var totalSpots = _.reduce(garages, function(sum,garage) {
+    return sum + Number(garage.open_spaces)
+  },0)
   
   // Update the legend
-  document.getElementById('Largest').innerHTML = maxCapacity
-  document.getElementById('Smallest').innerHTML = minCapacity
+  document.getElementById('Largest').innerHTML = '<div>' + biggestSpot.friendlyName + ' Spots: ' + biggestSpot.open_spaces + '</div>'
+  document.getElementById('Smallest').innerHTML = '<div>' + smallestLot.friendlyName + ' Spots: ' + smallestLot.open_spaces + '</div>'
   document.getElementById('Total').innerHTML = totalSpots
+  document.getElementById('Cheapest').innerHTML = '<div>' + costliestLot.friendlyName + ' Cost: $' + maxCost + '</div>'
+  document.getElementById('Expensive').innerHTML = '<div>' + cheapestLot.friendlyName + ' Cost: $' + minCost + '</div>'
 
   _.forEach(garages, function(garage){
     var points = garage.points
