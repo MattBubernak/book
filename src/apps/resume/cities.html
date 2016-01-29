@@ -22,8 +22,7 @@
       <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
       <script src="../../js/leaflet.label.js"></script>
 
-      <div class="container">
-      <nav>
+<nav>
       <div class="nav-wrapper">
         <ul id="navbar" class="right hide-on-med-and-down">
           <li><a href='index.html' style="font-size:20px">Resume</a></li>
@@ -32,8 +31,13 @@
               </ul>
             </div>
         </nav>
+
+      <div class="container">
+      
         <h1>My Favorite Cities</h1>
-        <div id="cities"></div>
+        <div class="row" id="cities">
+
+        </div>
         <div id="map" style="height:500px"></div>
       </div>
 
@@ -53,16 +57,16 @@ weatherRef.on('value', function(snapshot){
   var denver = cities['denver']
   var portland = cities['portland']
   var seattle = cities['seattle']
-  var sanfrancisco = cities['sanfrancisco']
+  var houston = cities['houston']
   var detroit = cities['detroit']
 
   // Clear the layers
   markersLayerGroup.clearLayers()
-  
+
   // Map the cities
   mapCity(portland)
   mapCity(denver)
-  mapCity(sanfrancisco)
+  mapCity(houston)
   mapCity(seattle)
   mapCity(detroit)
 
@@ -70,7 +74,7 @@ weatherRef.on('value', function(snapshot){
   displayCity(denver, 'denver')
   displayCity(portland, 'portland')
   displayCity(seattle, 'seattle')
-  displayCity(sanfrancisco, 'sanfrancisco')
+  displayCity(houston, 'houston')
   displayCity(detroit, 'detroit')
 })
 
@@ -105,9 +109,12 @@ function mapCity(city){
 
 function displayCity(city, name){
   console.log('displayCity', city)
-  $('#cities').append('<li class="collection-item">' + name +
-    ' humidity = ' +
-    JSON.stringify(city.currently) + '</li>')
+  $('#cities').append('<div class="col s2"><h4>' + name + '<br><img src="img/' + city.currently.icon +'.png" width=70px; height=70px></img>' +
+    '</h4> Humidity = ' +
+    JSON.stringify(city.currently.humidity) + '<br>Temperature = ' +
+    JSON.stringify(city.currently.temperature) +'<br>Conditions = ' +
+    JSON.stringify(city.currently.summary) +'<br>Wind = ' +
+    JSON.stringify(city.currently.windSpeed) +' mph<br></div>')
 }
 
       </script>
