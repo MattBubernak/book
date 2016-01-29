@@ -7,8 +7,8 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css">
 
       <!--Import stylesheet for Leaflet to work-->
-      <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
-      <link rel="stylesheet" href="/css/leaflet.label.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
+      <link rel="stylesheet" href="../../css/leaflet.label.css" />
 
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -20,11 +20,19 @@
       <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.0.0/lodash.min.js"></script>
       <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
-      <script src="/js/leaflet.label.js"></script>
+      <script src="../../js/leaflet.label.js"></script>
 
       <div class="container">
-
-        <h1>My Favoirte Cities</h1>
+      <nav>
+      <div class="nav-wrapper">
+        <ul id="navbar" class="right hide-on-med-and-down">
+          <li><a href='index.html' style="font-size:20px">Resume</a></li>
+          <li><a href="subscribe.html" style="font-size:20px">Subscribe</a></li>
+          <li><a href="cities.html" style="font-size:20px">Cities</a></li>
+              </ul>
+            </div>
+        </nav>
+        <h1>My Favorite Cities</h1>
         <div id="cities"></div>
         <div id="map" style="height:500px"></div>
       </div>
@@ -32,15 +40,38 @@
       <script>
 
 // create a firebase reference to the root
-var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com/austin');
+var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com');
+
 
 var data
 
 // read data from only once
-weatherRef.once('value', function(snapshot){
-  var city = snapshot.val()
-  mapCity(city)
-  displayCity(city, 'austin')
+weatherRef.on('value', function(snapshot){
+  var cities = snapshot.val()
+  
+  // Grab info for all 5 cities. 
+  var denver = cities['denver']
+  var portland = cities['portland']
+  var seattle = cities['seattle']
+  var sanfrancisco = cities['sanfrancisco']
+  var detroit = cities['detroit']
+
+  // Clear the layers
+  markersLayerGroup.clearLayers()
+  
+  // Map the cities
+  mapCity(portland)
+  mapCity(denver)
+  mapCity(sanfrancisco)
+  mapCity(seattle)
+  mapCity(detroit)
+
+  // Display all 5 cities. 
+  displayCity(denver, 'denver')
+  displayCity(portland, 'portland')
+  displayCity(seattle, 'seattle')
+  displayCity(sanfrancisco, 'sanfrancisco')
+  displayCity(detroit, 'detroit')
 })
 
 var attributionText = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a       href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
