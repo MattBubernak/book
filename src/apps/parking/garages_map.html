@@ -24,6 +24,17 @@
 
       <div class="container">
 
+
+        <nav>
+          <div class="nav-wrapper blue-grey darken-1">
+            <a href="index.html" class="brand-logo right">Parking Project</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+              <li><a href="index.html">Home</a></li>
+              <li ><a href="garages.html">Garages</a></li>
+              <li class="active"><a href="garages_map.html">Garages Map</a></li>
+            </ul>
+          </div>
+        </nav>
         <h1>Garages Map</h1>
         <div id="map" style="height:500px"></div>
         <h1>Information at a glance</h1>
@@ -44,7 +55,7 @@ var ref = new Firebase('https://publicdata-parking.firebaseio.com');
 var data
 
 // read data from the location san_francisco/garages, only once
-ref.child('san_francisco/garages').once('value', function(snapshot){
+ref.child('san_francisco/garages').on('value', function(snapshot){
   data = snapshot.val()
 
   var garages = _.filter(data, function(d){
@@ -138,7 +149,7 @@ _.forEach(garages, function(garage){
         color: color,
         fillColor: color,
         fillOpacity: 0.5
-    }).bindLabel(name + " contains " + spots + " spots. Cost: " + rateToday)
+    }).bindLabel(name + " contains " + spots + " spots. Cost: $" + rateToday)
 
     // add the circle layer to the makers layer group
     markersLayerGroup.addLayer(circle)
