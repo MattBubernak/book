@@ -37,11 +37,19 @@
         </nav>
         <h1>Garages Map</h1>
         <div id="map" style="height:500px"></div>
-        <h1>Information at a glance</h1>
-        <h3>Open Spots: <div id="Total">Loading...</div></h3>
-        <h3>Largest Lot:<div id="Largest">Loading...</div></h3>
-        <h3>Smallest Lot:<div id="Smallest">Loading...</div></h3>
-
+        <div class = "row">
+          <div class ="col s6">
+            <h2>Information at a glance</h2>
+            <h5><div style="font-weight:bold">Open Spots:</div> <div id="Total">Loading...</div></h5>
+            <h5><div style="font-weight:bold">Largest Lot:</div><div id="Largest">Loading...</div></h5>
+            <h5><div style="font-weight:bold">Smallest Lot:</div><div id="Smallest">Loading...</div></h5>
+          </div>
+          <div class ="col s6">
+            <h2>Graph Key</h2>
+            <h5><div style="font-weight:bold">Available Spots:</div> Indicated by circle size</h5>
+            <h5><div style="font-weight:bold">Cost:</div> Indicated by color scale(green = low, red = high)</h5>
+          </div>
+        </div>
       </div>
 
       <script>
