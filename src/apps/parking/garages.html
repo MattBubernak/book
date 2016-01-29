@@ -60,8 +60,8 @@
         var ref = new Firebase('https://publicdata-parking.firebaseio.com');
         var data
         // read data from the location san_francisco/garages, only once
-        ref.child('san_francisco/garages').once('value', function(snapshot){
-        ref.child('san_francisco/garages').once("value", function(snapshot) {
+        ref.child('san_francisco/garages').on('value', function(snapshot){
+        ref.child('san_francisco/garages').on("value", function(snapshot) {
                 var garages_all = snapshot.val()
                 $('#garages').empty()
                 for (key1 in garages_all) {

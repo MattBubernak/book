@@ -37,7 +37,7 @@ Friday @ 11:59pm, 1/29/2016
 their current statuses ([garages.html](/apps/parking/garages.html)).
   * Nicely display and organize key information about each garage using
   a styling toolkit (e.g., [materializecss](http://materializecss.com/) or something similar).
-* [ ] There should be a page providing a _map_ view of all the garage sand
+* [x] There should be a page providing a _map_ view of all the garage sand
 their current statuses ([garages_map.html](/apps/parking/garages_map.html)).
   * Use a combination of the sizes, colors, and types of markers, and text labels to visualize
   important information such as the number of open parking spaces, cost ...etc.
