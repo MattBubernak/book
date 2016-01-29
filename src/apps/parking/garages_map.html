@@ -46,7 +46,6 @@ var data
 // read data from the location san_francisco/garages, only once
 ref.child('san_francisco/garages').once('value', function(snapshot){
   data = snapshot.val()
-  console.log('data is loaded', data)
 
   var garages = _.filter(data, function(d){
       return _.has(d, 'open_spaces')
@@ -83,11 +82,6 @@ function drawGarages(garages){
   var maxCost = Number.MIN_VALUE;
   var totalSpots = 0;  
   var garageCount = 0; 
-
-
-  //console.log("BLA:" + _.max(garages, 'open_spaces').open_spaces)
-  
-  console.log("GARAGES:" + garages)  
 
 _.forEach(garages, function(garage){
     var spots = Number(garage.open_spaces);
@@ -128,7 +122,6 @@ _.forEach(garages, function(garage){
     // Compare this data point to the min/max. 
     var ratioSize = spots/maxCapacity
     var ratioRate = rateToday/maxCost
-    console.log(rateToday + ":" + maxCost)
     
     // Some fancy math for determing the size of the circle. Also a check to modify any that would be too small. 
     var size = 250 * ratioSize
@@ -140,7 +133,7 @@ _.forEach(garages, function(garage){
     var g = Math.round((255 * (100 - range)) / 100);
     var b = 0;
     var color= "rgb("+r+" ,"+g+","+ b+")"; 
-    console.log(color);
+
     var circle = L.circle(latlng, size, {
         color: color,
         fillColor: color,
