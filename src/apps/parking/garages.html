@@ -27,17 +27,16 @@
 
         <h1>Garages</h1>
 
-             <div class="container" style="padding-top:30px; margin-bottom:-10px">
+             <div class="container" style="padding-top:1px; margin-bottom:20px">
                 <div class="row">
-                   <!--  <div class="col s1 pull-s2"> <span class="flow-text"> <font size="6"> <b> Tasks </b> </font> </span> </div>
- -->
+                    <div class="col s4 pull-s2"> <span class="flow-text" id = "time"> <font size="6"> <b> </b> </font> </span> </div>
+<!-- 
                     <div class="col push-s12">
                         <a class="waves-effect waves-light btn modal-trigger" style="width:100px;right:50px;" href="#modal1">Filter</a>
-                    </div>
+                    </div> -->
 
                 </div>
-            </div>
-
+            </div> 
 
         <ul class="collapsible" data-collapsible="expandable", id="garages"></ul>
 
@@ -47,7 +46,6 @@
       <script>
       // create a firebase reference to the root
         var ref = new Firebase('https://publicdata-parking.firebaseio.com');
-        var data
         // read data from the location san_francisco/garages, only once
         ref.child('san_francisco/garages').once('value', function(snapshot){
         ref.child('san_francisco/garages').once("value", function(snapshot) {
@@ -56,21 +54,49 @@
                 for (key1 in garages_all) {
                      garage = garages_all[key1]
                      rates = garage["rates"]
-                     //console.log(garage["hours"][0])
-                     // if (select_priority == "0") {}
-                     // else if (task["priority"] != select_priority) {
-                     //     continue;
-                     // }
                      fill_container(garage, rates);
                 }
             })
 
+        ref.child('san_francisco').once('value', function(snapshot){
+             var all = snapshot.val()
+             time = all["_updated"]
+
+        })
+
+        $("#time").append(time)
+
         function fill_container(garage, rates) 
         {
-           // if(garage["open_spaces"] != 0){
-                // $('#garages').append(
+             if(garage["open_spaces"] != 0){
                   var html = '<li class="" xmlns="http://www.w3.org/1999/html"> \
-                <div class="collapsible-header"><i class="material-icons">place</i>' + garage["friendlyName"] + '</div>'  + 
+                <div class="collapsible-header"><i style="color:green" class="material-icons" >place</i>' + garage["friendlyName"] + '</div>'  + 
+                '<div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 5px; padding-left: 50px; margin-bottom: 0px;">'
+                        + 'Open_spaces:\t' + '<b>' + garage["open_spaces"] + '</b><br>'
+                        + 'Total_spaces:\t' + '<b>'+ garage["total_spaces"] + '</b><br>'
+                        // )
+                for(key2 in rates)
+                {
+                    for(key3 in rates[key2])
+                    {
+                          if(key3=="RQ"||key3=="RR") continue
+                          if(key3=="BEG"){
+                             html = html + rates[key2][key3] +'-'
+                          }
+                          if(key3=="END"||key3=="DESC"){
+                             html = html + rates[key2][key3] +':'
+                          }
+                          if(key3=="RATE"){
+                             html = html + '&nbsp&nbsp' + '<b>$' + rates[key2][key3] + '</b>'
+                             html += '<br>'
+                          }
+                    }
+                }
+                $('#garages').append(html + '</div></li>')
+              }
+              else{
+                  var html = '<li class="" xmlns="http://www.w3.org/1999/html"> \
+                <div class="collapsible-header"><i style="color:red" class="material-icons" >place</i>' + garage["friendlyName"] + '</div>'  + 
                 '<div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 5px; padding-left: 50px; margin-bottom: 0px;">'
                         + 'Open_spaces:\t' + garage["open_spaces"] + '<br>'
                         + 'Total_spaces:\t' + garage["total_spaces"] + '<br>'
@@ -93,6 +119,9 @@
                     }
                 }
                 $('#garages').append(html + '</div></li>')
+              }
+
+
         }
         
         // displayGarages(garages)
