@@ -65,7 +65,7 @@ var ref = new Firebase('https://publicdata-parking.firebaseio.com');
 var data
 
 // read data from the location san_francisco/garages, only once
-ref.child('san_francisco/garages').once('value', function(snapshot){
+ref.child('san_francisco/garages').on('value', function(snapshot){
   data = snapshot.val()
 
   var garages = _.filter(data, function(d){
@@ -90,6 +90,49 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 var markersLayerGroup = L.layerGroup()
 // add the makers layer group to the map
 markersLayerGroup.addTo(map)
+
+// parseTime Courtesy of stack overflow: http://stackoverflow.com/questions/141348/what-is-the-best-way-to-parse-a-time-into-a-date-object-from-user-input-in-javas
+function parseTime(timeString) {    
+    if (timeString == '') return null;
+
+    var time = timeString.match(/(\d+)(:(\d\d))?\s*(p?)/i); 
+    if (time == null) return null;
+
+    var hours = parseInt(time[1],10);    
+    if (hours == 12 && !time[4]) {
+          hours = 0;
+    }
+    else {
+        hours += (hours < 12 && time[4])? 12 : 0;
+    }   
+    var d = new Date();             
+    d.setHours(hours);
+    d.setMinutes(parseInt(time[3],10) || 0);
+    d.setSeconds(0, 0);  
+    return d;
+}
+
+// Used to extract the rate based on current time. 
+function getRate(rates){
+  var returnRate = 999
+  var currentTime = new Date(); 
+  var d = new Date();
+  var hour = d.getHours();
+  _.some(rates, function(rate){
+    if (_.has(rate),'BEG' && _.has(rate),'END') 
+    {
+      var beg = parseTime(rate.BEG)
+      var end = parseTime(rate.END)
+      var rate = rate.RATE
+      if (currentTime > beg && currentTime < end)
+      {
+        returnRate = rate
+        return rate
+      }
+    }
+  })
+  return returnRate
+}
 
 // visualize garages on a map
 function drawGarages(garages){
@@ -117,25 +160,25 @@ function drawGarages(garages){
   minCapacity = Number(smallestLot.open_spaces)
 
   var costliestLot = _.reduce(garages, function(prev,cur) {
-    return Number(prev.rates[today.getDay()].RATE) > Number(cur.rates[today.getDay()].RATE) ? prev : cur
+    return getRate(prev.rates) > getRate(cur.rates) ? prev : cur
   },garages[0])
-  maxCost = Number(costliestLot.rates[today.getDay()].RATE)
+  maxCost = getRate(costliestLot.rates)
   
   var cheapestLot = _.reduce(garages, function(prev,cur) {
-    return Number(prev.rates[today.getDay()].RATE) < Number(cur.rates[today.getDay()].RATE) ? prev : cur
+    return getRate(prev.rates) < getRate(cur.rates) ? prev : cur
   },garages[0])
-  minCost = Number(cheapestLot.rates[today.getDay()].RATE)
+  minCost = getRate(cheapestLot.rates)
 
   var totalSpots = _.reduce(garages, function(sum,garage) {
     return sum + Number(garage.open_spaces)
   },0)
   
   // Update the legend
-  document.getElementById('Largest').innerHTML = '<div>' + biggestSpot.friendlyName + ' Spots: ' + biggestSpot.open_spaces + '</div>'
-  document.getElementById('Smallest').innerHTML = '<div>' + smallestLot.friendlyName + ' Spots: ' + smallestLot.open_spaces + '</div>'
+  document.getElementById('Largest').innerHTML = '<div>' + biggestSpot.friendlyName + ', Spots: ' + biggestSpot.open_spaces + '</div>'
+  document.getElementById('Smallest').innerHTML = '<div>' + smallestLot.friendlyName + ', Spots: ' + smallestLot.open_spaces + '</div>'
   document.getElementById('Total').innerHTML = totalSpots
-  document.getElementById('Cheapest').innerHTML = '<div>' + costliestLot.friendlyName + ' Cost: $' + maxCost + '</div>'
-  document.getElementById('Expensive').innerHTML = '<div>' + cheapestLot.friendlyName + ' Cost: $' + minCost + '</div>'
+  document.getElementById('Cheapest').innerHTML = '<div>' + cheapestLot.friendlyName + ', Cost: $' + minCost + '</div>'
+  document.getElementById('Expensive').innerHTML = '<div>' + costliestLot.friendlyName + ', Cost: $' + maxCost + '</div>'
 
   _.forEach(garages, function(garage){
     var points = garage.points
@@ -143,7 +186,7 @@ function drawGarages(garages){
     var spots =  Number(garage.open_spaces)
     var name = garage.friendlyName
     var rates = garage.rates
-    var rateToday = rates[today.getDay()].RATE
+    var rateToday = getRate(rates)
     
     // Compare this data point to the min/max. 
     var ratioSize = spots/maxCapacity
@@ -160,14 +203,40 @@ function drawGarages(garages){
     var b = 0;
     var color= "rgb("+r+" ,"+g+","+ b+")"; 
 
+
+
     var circle = L.circle(latlng, size, {
         color: color,
         fillColor: color,
         fillOpacity: 0.5
     }).bindLabel(name + " contains " + spots + " spots. Cost: $" + rateToday)
 
+    //Extend the Default marker class
+     var CostIcon = L.Icon.Default.extend({
+        options: {
+              iconUrl: 'dollar.png' 
+        }
+     })
+     var costIcon = new CostIcon();
+
+     var BigIcon = L.Icon.Default.extend({
+        options: {
+              iconUrl: 'biggest.png' 
+        }
+     })
+     var bigIcon = new BigIcon();
+
     // add the circle layer to the makers layer group
     markersLayerGroup.addLayer(circle)
+      
+    if (getRate(garage.rates) == getRate(cheapestLot.rates))
+    {
+      L.marker(latlng, {icon: costIcon}).bindLabel(name + " has a min cost: $" +minCost).addTo(map);
+    }
+    if (garage == biggestSpot)
+    {
+      L.marker(latlng, {icon: bigIcon}).bindLabel(name + " has the most spots: " + maxCapacity).addTo(map);
+    }
 
   })
 
