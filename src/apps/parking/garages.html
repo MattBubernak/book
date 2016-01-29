@@ -40,32 +40,52 @@
         var data
         // read data from the location san_francisco/garages, only once
         ref.child('san_francisco/garages').once('value', function(snapshot){
-        ref.child('san_francisco/garages').on("value", function(snapshot) {
-                var garages = snapshot.val()
+        ref.child('san_francisco/garages').once("value", function(snapshot) {
+                var garages_all = snapshot.val()
                 $('#garages').empty()
-                for (key in garages) {
-                     garage = garages[key]
+                for (key1 in garages_all) {
+                     garage = garages_all[key1]
+                     rates = garage["rates"]
+                     //console.log(garage["hours"][0])
                      // if (select_priority == "0") {}
                      // else if (task["priority"] != select_priority) {
                      //     continue;
                      // }
-                     fill_container(garage);
+                     fill_container(garage, rates);
                 }
             })
 
-        function fill_container(garage) 
+        function fill_container(garage, rates) 
         {
            // if(garage["open_spaces"] != 0){
-                $('#garages').append('<li class="" xmlns="http://www.w3.org/1999/html"> \
+                // $('#garages').append(
+                  var html = '<li class="" xmlns="http://www.w3.org/1999/html"> \
                 <div class="collapsible-header"><i class="material-icons">label_outline</i>' + garage["friendlyName"] + '</div>'  + 
                 '<div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 5px; padding-left: 50px; margin-bottom: 0px;">'
                         + 'Open_spaces:\t' + garage["open_spaces"] + '<br>'
-                        + 'Total_spaces:\t' + garage["total_spaces"] + '<br>' +
-                        '</li>')
-        
+                        + 'Total_spaces:\t' + garage["total_spaces"] + '<br>'
+                        // )
+                for(key2 in rates)
+                {
+                    for(key3 in rates[key2])
+                    {
+                          if(key3=="RQ"||key3=="RR") continue
+                          if(key3=="BEG"){
+                             html = html + rates[key2][key3] +'-'
+                          }
+                          if(key3=="END"||key3=="DESC"){
+                             html = html + rates[key2][key3] +':'
+                          }
+                          if(key3=="RATE"){
+                             html = html + '&nbsp&nbsp' + '<b>$' + rates[key2][key3] + '</b>'
+                             html += '<br>'
+                          }
+                    }
+                }
+                $('#garages').append(html + '</div></li>')
         }
         
-        displayGarages(garages)
+        // displayGarages(garages)
         
         })
 
