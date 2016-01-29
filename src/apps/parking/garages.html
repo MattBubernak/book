@@ -8,6 +8,13 @@
 
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+      <style>
+          .divright{width:100px; height:50px;border:1px solid #F00;float:right}
+      </style>
+  
+      <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+
     </head>
 
     <body>
@@ -19,38 +26,55 @@
       <div class="container">
 
         <h1>Garages</h1>
-        <ul class="collection" id="garages">
-        </ul>
+        <!-- <ul class="collection" id="garages"> -->
+        <!-- </ul> -->
+
+        <ul class="collapsible" data-collapsible="expandable", id="garages"></ul>
+
 
       </div>
 
       <script>
+      // create a firebase reference to the root
+        var ref = new Firebase('https://publicdata-parking.firebaseio.com');
+        var data
+        // read data from the location san_francisco/garages, only once
+        ref.child('san_francisco/garages').once('value', function(snapshot){
+        ref.child('san_francisco/garages').on("value", function(snapshot) {
+                var garages = snapshot.val()
+                $('#garages').empty()
+                for (key in garages) {
+                     garage = garages[key]
+                     // if (select_priority == "0") {}
+                     // else if (task["priority"] != select_priority) {
+                     //     continue;
+                     // }
+                     fill_container(garage);
+                }
+            })
 
-// create a firebase reference to the root
-var ref = new Firebase('https://publicdata-parking.firebaseio.com');
+        function fill_container(garage) 
+        {
+           // if(garage["open_spaces"] != 0){
+                $('#garages').append('<li class="" xmlns="http://www.w3.org/1999/html"> \
+                <div class="collapsible-header"><i class="material-icons">label_outline</i>' + garage["friendlyName"] + '</div>'  + 
+                '<div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 5px; padding-left: 50px; margin-bottom: 0px;">'
+                        + 'Open_spaces:\t' + garage["open_spaces"] + '<br>'
+                        + 'Total_spaces:\t' + garage["total_spaces"] + '<br>' +
+                        '</li>')
+        
+        }
+        
+        displayGarages(garages)
+        
+        })
 
-var data
-
-// read data from the location san_francisco/garages, only once
-ref.child('san_francisco/garages').once('value', function(snapshot){
-  data = snapshot.val()
-  console.log('data is loaded', data)
-
-  // filter the data
-  var garages = _.filter(data, function(d){
-      // keep only those values (d) that has "open_spaces" as a field
-      return _.has(d, 'open_spaces')
-  })
-
-  displayGarages(garages)
-})
-
-function displayGarages(garages){
-  // lodash _.forEach https://lodash.com/docs#forEach
-  _.forEach(garages, function(val, key){
-    $('#garages').append('<li class="collection-item">' + val['friendlyName'] + '</li>')
-  })
-}
+        function displayGarages(garages){
+          // lodash _.forEach https://lodash.com/docs#forEach
+          _.forEach(garages, function(val, key){
+            $('#garages').append('<li class="collection-item">' + val['friendlyName'] + '</li>')
+          })
+        }
       </script>
     </body>
   </html>
