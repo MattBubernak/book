@@ -35,13 +35,16 @@
 
       <script>
 
+// Create a date for today
+var today = new Date();
+
 // create a firebase reference to the root
 var ref = new Firebase('https://publicdata-parking.firebaseio.com');
 
 var data
 
 // read data from the location san_francisco/garages, only once
-ref.child('san_francisco/garages').on('value', function(snapshot){
+ref.child('san_francisco/garages').once('value', function(snapshot){
   data = snapshot.val()
   console.log('data is loaded', data)
 
@@ -76,9 +79,10 @@ function drawGarages(garages){
 
   var minCapacity = Number.MAX_VALUE; 
   var maxCapacity = Number.MIN_VALUE;
+  var minCost = Number.MAX_VALUE; 
+  var maxCost = Number.MIN_VALUE;
   var totalSpots = 0;  
   var garageCount = 0; 
-  var medianCapacity = null; 
 
 
   //console.log("BLA:" + _.max(garages, 'open_spaces').open_spaces)
@@ -87,22 +91,28 @@ function drawGarages(garages){
 
 _.forEach(garages, function(garage){
     var spots = Number(garage.open_spaces);
-    if (spots > Number(maxCapacity))
+    var todayCost = Number(garage.rates[today.getDay()].RATE);
+    if (spots > maxCapacity)
     {
-      // store name
       maxCapacity = spots;
     }
-    if (spots < Number(minCapacity))
+    if (spots < minCapacity)
     {
-      // store name
       minCapacity = spots;
+    }
+    if (todayCost > maxCost)
+    {
+      maxCost = todayCost
+    }
+    if (todayCost < minCost)
+    {
+      minCost = todayCost
     }
     totalSpots += spots;
   })
 
-
-  console.log("Max: " + maxCapacity + " Min: " + minCapacity)
-  // TODO: update the legend
+  
+  // Update the legend
   document.getElementById('Largest').innerHTML = maxCapacity
   document.getElementById('Smallest').innerHTML = minCapacity
   document.getElementById('Total').innerHTML = totalSpots
@@ -112,27 +122,30 @@ _.forEach(garages, function(garage){
     var latlng = [points[0], points[1]]
     var spots =  Number(garage.open_spaces)
     var name = garage.friendlyName
-    // create a circle layer
+    var rates = garage.rates
+    var rateToday = rates[today.getDay()].RATE
     
     // Compare this data point to the min/max. 
-    var ratio = spots/maxCapacity
+    var ratioSize = spots/maxCapacity
+    var ratioRate = rateToday/maxCost
+    console.log(rateToday + ":" + maxCost)
     
     // Some fancy math for determing the size of the circle. Also a check to modify any that would be too small. 
-    var size = 250 * ratio
+    var size = 250 * ratioSize
     if (size < 10) size = 10; 
 
     // Some fancy math for determing a color range(Too easy @andrew)
-    var range = 100 * (1-ratio)
+    var range = 100 * (ratioRate)
     var r = Math.round((255 * range) / 100);
     var g = Math.round((255 * (100 - range)) / 100);
     var b = 0;
     var color= "rgb("+r+" ,"+g+","+ b+")"; 
-
+    console.log(color);
     var circle = L.circle(latlng, size, {
         color: color,
         fillColor: color,
         fillOpacity: 0.5
-    }).bindLabel(name + " contains " + spots + " spots.")
+    }).bindLabel(name + " contains " + spots + " spots. Cost: " + rateToday)
 
     // add the circle layer to the makers layer group
     markersLayerGroup.addLayer(circle)
