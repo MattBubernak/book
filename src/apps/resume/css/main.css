@@ -5,6 +5,10 @@ h2
 	color: black;
 	opacity: .75;
 }
+p
+{
+	font-size: 50px;
+}
 
 .item-header
 {

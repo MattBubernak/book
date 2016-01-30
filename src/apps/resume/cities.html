@@ -10,6 +10,9 @@
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.css" />
       <link rel="stylesheet" href="../../css/leaflet.label.css" />
 
+      <!-- custom css for the website -->
+      <link rel="stylesheet" type="text/css" href="css/main.css">
+
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
@@ -35,7 +38,7 @@
       <div class="container">
       
         <h1>My Favorite Cities</h1>
-        <div class="row" id="cities">
+        <div class="row " id="cities">
 
         </div>
         <div id="map" style="height:500px"></div>
@@ -62,13 +65,14 @@ weatherRef.on('value', function(snapshot){
 
   // Clear the layers
   markersLayerGroup.clearLayers()
+  $('#cities').empty()
 
   // Map the cities
-  mapCity(portland)
-  mapCity(denver)
-  mapCity(houston)
-  mapCity(seattle)
-  mapCity(detroit)
+  mapCity(portland, 'Portland')
+  mapCity(denver, 'Denver')
+  mapCity(houston, 'Houston')
+  mapCity(seattle, 'Seattle')
+  mapCity(detroit, 'Detroit')
 
   // Display all 5 cities. 
   displayCity(denver, 'denver')
@@ -95,7 +99,23 @@ var markersLayerGroup = L.layerGroup()
 markersLayerGroup.addTo(map)
 
 // visualize cities on the map
-function mapCity(city){
+function mapCity(city,name){
+
+    //Extend the Default marker class
+    var latlng = [city.latitude, city.longitude]
+     var WeatherIcon = L.Icon.Default.extend({
+        options: {
+              iconUrl: "img/" + city.currently.icon + ".png",
+              iconSize: [35,35]
+        }
+     })
+     var weatherIcon = new WeatherIcon();
+
+    L.marker(latlng, {icon: weatherIcon}).bindLabel(name + " Temp:" + city.currently.temperature + " Conditions:" + city.currently.summary).addTo(map);
+    
+
+
+  /*
   console.log('mapCity', city)
   var latlng = [city.latitude, city.longitude]
   var circle = L.circle(latlng, 10, {
@@ -105,18 +125,34 @@ function mapCity(city){
   }).bindLabel('Austin')
   
   markersLayerGroup.addLayer(circle)
+  */
 }
 
 function displayCity(city, name){
   console.log('displayCity', city)
-  $('#cities').append('<div class="col s2"><h4>' + name + '<br><img src="img/' + city.currently.icon +'.png" width=70px; height=70px></img>' +
+  $('#cities').append('<div class="col s6">' + 
+      '<div class="card light-green darken-3">' +
+        '<div class="card-content white-text">' + 
+          '<span class="card-title" style="font-size:35px">' + '<img src="img/' + city.currently.icon +'.png" width=40px; height=40px></img><b>' + name.toUpperCase() + '</b></span>' + '<h5> Daily Summary</h5><div style="height:40px"><p style="font-size:15px">' + city.daily.summary + '</p></div>' + '<h5> Current Info</h5>' +
+          '<ul>' + '<li><h6>' + '<b>Humidity:</b> ' + JSON.stringify(city.currently.humidity) + '%</h6></li>' + '<li><h6><b>Temperature:</b> ' + JSON.stringify(city.currently.temperature) + '&deg</h6></li>' + '<li><h6><b>Conditions:</b> ' + city.currently.summary + '</h6></li>' + '<li><h6><b>Wind:</b> ' + JSON.stringify(city.currently.windSpeed) + ' mph</h6></li>' +'<li><h6><b>Precip Probability:</b> ' + JSON.stringify(city.currently.precipProbability) + '%</h6></li>' +
+            '<li><h6><b>Nearest Storm:</b> ' + JSON.stringify(city.currently.nearestStormDistance) + ' miles</h6></li>' +
+          '</ul>' + 
+        '</div>' +
+
+      '</div>' +
+    '</div>')
+}
+
+            
+
+        /*  
+<h4>' + name + '<br><img src="img/' + city.currently.icon +'.png" width=50px; height=50px></img>' +
     '</h4> Humidity = ' +
     JSON.stringify(city.currently.humidity) + '<br>Temperature = ' +
     JSON.stringify(city.currently.temperature) +'<br>Conditions = ' +
     city.currently.summary +'<br>Wind = ' +
-    JSON.stringify(city.currently.windSpeed) +' mph<br></div>')
-}
-
+    JSON.stringify(city.currently.windSpeed) +' mph<br>
+    */
       </script>
     </body>
   </html>
