@@ -9,15 +9,25 @@
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-      <style>
+    <style>
           .divright{width:100px; height:50px;border:1px solid #F00;float:right}
       </style>
+
+    <style>
+      html {
+        background: url(sf.jpg) no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+    </style>
   
       <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
 
     </head>
 
-    <body>
+    <body style="display: flex; min-height: 100vh; flex-direction: column;">
       <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
       <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
@@ -25,22 +35,13 @@
       
       <div class="container">
 
-         <nav>
-          <div class="nav-wrapper blue-grey darken-1">
-            <a href="index.html" class="brand-logo right">Parking Project</a>
-            <ul id="nav-mobile" class="left hide-on-med-and-down">
-              <li><a href="index.html">Home</a></li>
-              <li class="active"><a href="garages.html">Garages</a></li>
-              <li ><a href="garages_map.html">Garages Map</a></li>
-            </ul>
-          </div>
-        </nav>
-
-<h1>Garages</h1>
+        <h1>
+        <div align="center">Garages</div>
+        </h1>
 
              <div class="container" style="padding-top:1px; margin-bottom:20px">
                 <div class="row">
-                    <div class="col s4 pull-s2"> <span class="flow-text" id = "time"> <font size="6"> <b> </b> </font> </span> </div>
+                    <div class="col s10 push-s7"> <span class="flow-text" id = "time"></span></div>
 <!-- 
                     <div class="col push-s12">
                         <a class="waves-effect waves-light btn modal-trigger" style="width:100px;right:50px;" href="#modal1">Filter</a>
@@ -60,7 +61,11 @@
         // read data from the location san_francisco/garages, only once
         ref.child('san_francisco/garages').on('value', function(snapshot){
         ref.child('san_francisco/garages').on("value", function(snapshot) {
-                var garages_all = snapshot.val()
+                var data = snapshot.val()
+            var garages_all = _.filter(data, function(d){
+          // keep only those values (d) that has "open_spaces" as a field
+              return _.has(d, 'friendlyName')
+         })
                 $('#garages').empty()
                 for (key1 in garages_all) {
                      garage = garages_all[key1]
@@ -68,21 +73,25 @@
                      fill_container(garage, rates);
                 }
             })
-
         ref.child('san_francisco').once('value', function(snapshot){
              var all = snapshot.val()
+             $('#time').empty()
              time = all["_updated"]
-
+             time_arr = time.split(" ")
+             html = '<font size="4">Last updated: '
+             // $("#time").append()
+             html = html + time_arr[4] + ' '
+             for (token in time_arr.slice(0,4)) {html = html + time_arr[token]+ ' '}
+              html += '</font>'
+             $("#time").append(html)
         })
-
-        $("#time").append(time)
-
+        
         function fill_container(garage, rates) 
         {
              if(garage["open_spaces"] != 0){
                   var html = '<li class="" xmlns="http://www.w3.org/1999/html"> \
                 <div class="collapsible-header"><i style="color:green" class="material-icons" >place</i>' + garage["friendlyName"] + '</div>'  + 
-                '<div class="collapsible-body" style="display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 5px; padding-left: 50px; margin-bottom: 0px;">'
+                '<div class="collapsible-body" style="background-color: white; opacity: 0.6; display: none; padding-top: 0px; margin-top: 0px; padding-bottom: 5px; padding-left: 50px; margin-bottom: 0px;">'
                         + 'Open_spaces:\t' + '<b>' + garage["open_spaces"] + '</b><br>'
                         + 'Total_spaces:\t' + '<b>'+ garage["total_spaces"] + '</b><br>'
                         // )
@@ -131,14 +140,11 @@
                 }
                 $('#garages').append(html + '</div></li>')
               }
-
-
         }
         
         // displayGarages(garages)
         
         })
-
         function displayGarages(garages){
           // lodash _.forEach https://lodash.com/docs#forEach
           _.forEach(garages, function(val, key){

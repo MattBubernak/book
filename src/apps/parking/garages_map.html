@@ -65,7 +65,7 @@ var ref = new Firebase('https://publicdata-parking.firebaseio.com');
 var data
 
 // read data from the location san_francisco/garages, only once
-ref.child('san_francisco/garages').on('value', function(snapshot){
+ref.child('san_francisco/garages').once('value', function(snapshot){
   data = snapshot.val()
 
   var garages = _.filter(data, function(d){
@@ -92,8 +92,8 @@ var markersLayerGroup = L.layerGroup()
 markersLayerGroup.addTo(map)
 
 // parseTime Courtesy of stack overflow: http://stackoverflow.com/questions/141348/what-is-the-best-way-to-parse-a-time-into-a-date-object-from-user-input-in-javas
-function parseTime(timeString) {    
-    if (timeString == '') return null;
+function parseTime(timeString) {
+    if (timeString == '' || timeString == undefined) return null;
 
     var time = timeString.match(/(\d+)(:(\d\d))?\s*(p?)/i); 
     if (time == null) return null;
@@ -119,14 +119,20 @@ function getRate(rates){
   var d = new Date();
   var hour = d.getHours();
   _.some(rates, function(rate){
-    if (_.has(rate),'BEG' && _.has(rate),'END') 
+    
+    if (_.has(rate,'BEG') && _.has(rate,'END')) 
     {
       var beg = parseTime(rate.BEG)
       var end = parseTime(rate.END)
-      var rate = rate.RATE
-      if (currentTime > beg && currentTime < end)
+      //var end2 = new Date()
+      //end.setSeconds(end.getSeconds())
+      //console.log(end2)
+      //console.log("[" + rate.END + "]")
+      //console.log("Current:" + currentTime + "beg:" + beg + "end:" + end)
+      if ((currentTime > beg && currentTime < end) || (currentTime > beg && (rate.END == "12:00 AM")))
       {
-        returnRate = rate
+        //console.log("matched")
+        returnRate = rate.RATE
         return rate
       }
     }

@@ -113,7 +113,7 @@ function displayCity(city, name){
     '</h4> Humidity = ' +
     JSON.stringify(city.currently.humidity) + '<br>Temperature = ' +
     JSON.stringify(city.currently.temperature) +'<br>Conditions = ' +
-    JSON.stringify(city.currently.summary) +'<br>Wind = ' +
+    city.currently.summary +'<br>Wind = ' +
     JSON.stringify(city.currently.windSpeed) +' mph<br></div>')
 }
 
