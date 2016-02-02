@@ -2,7 +2,7 @@ MyComponents.Team = React.createClass({
   render: function() {
 
     // inspect this.props.team to make sure we load the data correctly
-    console.log('members', this.props.members)
+    //console.log('members', this.props.members)
 
     // For each 'member' in 'team', create a <li> component to display
     // information about this member.

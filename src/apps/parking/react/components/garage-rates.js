@@ -3,8 +3,14 @@ MyComponents.Rate = React.createClass({
     return (
       <div className="card">
         <div className="card-content">
-          TODO: This is a component to display a single rate data.
-          Raw props data is {JSON.stringify(this.props)}
+          <ul>
+            <li>{'Rate: $' + this.props.rate.RATE }</li>
+            <li>{'START: ' + this.props.rate.BEG}</li>
+            <li>{'END: ' + this.props.rate.END}</li>
+            <li>{'DESC: ' + this.props.rate.DESC}</li>
+            <li>{'RQ: ' + this.props.rate.RQ}</li>
+            <li>{'RR: ' + this.props.rate.RR}</li>
+          </ul>
         </div>
       </div>
     );
@@ -22,8 +28,7 @@ MyComponents.GarageRates = React.createClass({
     return (
       <div className="card">
         <div className="card-content">
-          TODO: This is a component to display the rates of this garage.
-          Raw props data is {JSON.stringify(this.props)}
+          <h3>Rate Information</h3>
 
           { rates }
 

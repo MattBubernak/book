@@ -60,7 +60,8 @@
       var garage = {name: 'something'}
 
       // make a jQuery call to load the garages data
-      $.ajax({url:'garages.snapshot.json'})
+      console.log('making ajax call')
+      $.ajax({dataType: "json",url:'garages.snapshot.json'})
         .success(function(garages) {
 
           console.log('garages:', garages)
@@ -69,8 +70,9 @@
             $('#garage').get(0)
           )
 
-        })
-
+        }).error( function(XMLHttpRequest, textStatus, errorThrown) { 
+        console.log("Status: " + textStatus); console.log("Error: " + errorThrown)}) 
+        
     </script>
   </body>
 </html>
