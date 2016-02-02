@@ -1,78 +1,69 @@
 var _ = require('lodash')
 var random_name = require('node-random-name');
 var Firebase = require('firebase');
-
 // San Francisco
 var city_location = {
-  lat: 37.78,
-  lon: -122.41
+    lat: 37.78,
+    lon: -122.41
 }
-
 var radius = 0.03
+    // simualate a random person entering, staying for a duration, and leaving
+function simulate() {
+    // generate a random person with a random name,
+    // random location, and random duration
+    var name = random_name()
+    var duration = 1 + 5 * Math.random()
+    var lat = city_location.lat + radius * (Math.random() - 0.5) * 2
+    var lon = city_location.lon + radius * (Math.random() - 0.5) * 2
+    var person = {
+            name: name,
+            duration: duration,
+            lat: lat,
+            lon: lon
+        }
+        // simulate this person entering
+    enter(person)
+        // simulate this person leaving after 'duration' seconds
+    setTimeout(function() {
+        leave(person)
+    }, duration * 1000)
+}
 
-// simualate a random person entering, staying for a duration, and leaving
-function simulate(){
+function enter(person) {
+    console.log('enter', person)
+    // Put this person in the Firebase
+    var ref = new Firebase('https://pizzarollz.firebaseio.com/')
+    ref.child(person.name).set({
+        name: person.name,
+        lat: person.lat,
+        lon: person.lon
+    });
+}
 
-  // generate a random person with a random name,
-  // random location, and random duration
-  var name = random_name()
-  var duration = 1 + 5 * Math.random()
-  var lat = city_location.lat + radius * (Math.random() - 0.5) * 2
-  var lon = city_location.lon + radius * (Math.random() - 0.5) * 2
-  var person = {
-    name: name,
-    duration: duration,
-    lat: lat,
-    lon: lon
-  }
+function leave(person) {
+    console.log('leave', person)
+        // TODO: remove this person from the Firebase
+        // var ref = new Firebase('your-firebase-url')
+        // ...
+    var ref = new Firebase('https://pizzarollz.firebaseio.com/')
+    var onComplete = function(error) {
+        if (error) {
+            console.log('Synchronization failed');
+        } else {
+            console.log('Synchronization succeeded');
+        }
+    };
 
-  // simulate this person entering
-  enter(person)
-
-  // simulate this person leaving after 'duration' seconds
-  setTimeout(function(){
-    leave(person)
-  }, duration * 1000)
+    ref.child(person.name).remove(onComplete);
 
 }
 
-function enter(person){
-  console.log('enter', person)
-  // TODO: put this person in the Firebase
-  var ref = new Firebase('https://pizzarollz.firebaseio.com/')
-  ref.child(person.name).set({
-    lat: person.lat,
-    lon: person.lon
-  })
-  // ...
+function clear() {
+    // TODO: remove all people from the Firebase
+    var ref = new Firebase('https://pizzarollz.firebaseio.com/')
+    ref.remove()
 }
-
-function leave(person){
-  console.log('leave', person)
-  // TODO: remove this person from the Firebase
-  var ref = new Firebase('https://pizzarollz.firebaseio.com/')
-  var onComplete = function(error) {
-    if (error)
-        console.log('Sync Failed');
-    } else {
-        console.log('Sync Success');
-    }
-  };
-  ref.child(person.name).remove(onComplete);
-  // ...
-}
-
-
-function clear(){
-  // TODO: remove all people from the Firebase
-  var ref = new Firebase('https://pizzarollz.firebaseio.com/')
-  ref.remove()
-  // ...
-}
-
-
 // clear the firebase, so that the simulation always starts from no one
 clear()
-
-// run each second
+    // run each second
 setInterval(simulate, 2000)
