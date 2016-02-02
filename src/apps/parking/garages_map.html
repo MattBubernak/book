@@ -112,7 +112,9 @@ function drawBuses(transit){
   console.log(transit)
   transitLayerGroup.clearLayers()
 
-  var busMark = busMark = "bus.png"
+  var type = "bus"
+  var busMark = "bus.png"
+
   var transitMarker = L.Icon.Default.extend({
       options: {
       iconUrl: busMark,
@@ -126,7 +128,13 @@ function drawBuses(transit){
     var lon = tran.lon
     var latlon = [lat, lon]
     var speed = tran.speedKmHr
-    var type = tran.vtype
+    type = tran.vtype
+
+    if (type == "bus")
+    {busMark ="bus.png"}
+    else
+    {busMark = "train.png"}
+
 
     var transitIcon = new transitMarker();
     L.marker(latlon, {icon:transitIcon}).bindPopup('<b>' + buses + '</b><br > ' + speed + ', ' + type).addTo(transitLayerGroup)
