@@ -75,6 +75,15 @@ ref.child('san_francisco/garages').once('value', function(snapshot){
   drawGarages(garages)
 })
 
+
+var transitRef = new Firebase('https://publicdata-transit.firebaseio.com/sf_muni');
+ 
+
+ transitRef.child('vehicles').on('value', function(snapshot){
+  transit = snapshot.val()
+  drawBuses(transit)
+})
+
 var attributionText = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a       href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>'
 
 // create the map
@@ -90,6 +99,36 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 var markersLayerGroup = L.layerGroup()
 // add the makers layer group to the map
 markersLayerGroup.addTo(map)
+
+var transitLayerGroup = L.layerGroup()
+transitLayerGroup.addTo(map)
+
+
+function drawBuses(transit){
+
+  transitLayerGroup.clearLayers()
+
+  var busMark = busMark = "bus.png"
+  var transitMarker = L.icon({
+    iconUrl: busMark,
+    iconSize: [40, 40],
+    iconAnchor: [21, 40],
+    popupAnchor: [-3, -76],
+  })
+
+    _.forEach(transit, function(tran) {
+    var buses = tran.key()
+    var lat = tran.child("lat").val()
+    var lon = tran.child("lon").val()
+    var latlon = [lat, lon]
+    var speed = tran.child("speedKmHr").val()
+    var type = tran.child("vtype").val()
+
+    var transitIcon = new transitMarker();
+    L.marker(latlon, {icon:transitIcon}).bindPopup('<b>' + buses + '</b><br > ' + speed + ', ' + type).addTo(transitLayerGroup)
+    })
+  
+}
 
 // parseTime Courtesy of stack overflow: http://stackoverflow.com/questions/141348/what-is-the-best-way-to-parse-a-time-into-a-date-object-from-user-input-in-javas
 function parseTime(timeString) {
@@ -247,6 +286,8 @@ function drawGarages(garages){
   })
 
 }
+
+  
 
       </script>
     </body>
