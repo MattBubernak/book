@@ -262,14 +262,12 @@ var customersData
 
 
 // read data from the location san_francisco/garages, only once
-ref.child('/').on('value', function(snapshot){
-  console.log("hi");
+ref.child('customers').on('value', function(snapshot){
   customersData = snapshot.val()
   drawCustomers(customersData)
 })
 
 function drawCustomers(customers){
-  console.log("CUSTOMERS:" + customers)
   customerLayerGroup.clearLayers()
   // Create a marker for da peoplez. 
    var PersonMarker = L.Icon.Default.extend({
