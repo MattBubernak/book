@@ -26,18 +26,20 @@ function simulate() {
         // simulate this person leaving after 'duration' seconds
     setTimeout(function() {
         leave(person)
-    }, duration * 1000)
+    }, duration * 10000)// added one 0
 }
 
 function enter(person) {
     console.log('enter', person)
     // Put this person in the Firebase
     var ref = new Firebase('https://pizzarollz.firebaseio.com/')
+    var taskListRef = ref.child('customers')
     ref.child(person.name).set({
         name: person.name,
         lat: person.lat,
         lon: person.lon
     });
+    var newTaskRef = taskListRef.push()
 }
 
 function leave(person) {
