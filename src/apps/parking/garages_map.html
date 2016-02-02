@@ -125,7 +125,7 @@ function drawBuses(transit){
       shadowSize: [0,0]
     }
   })
-
+    _.forEach(transit, function(tran) {
     // Artificially reduced count so that computer's don't explode. 
     if (tran.id%10 == 0)
     {
@@ -147,10 +147,11 @@ function drawBuses(transit){
       L.marker(latlon, {icon:transitIcon}).bindPopup('<b>' + buses + '</b><br > ' + speed + ', ' + type).addTo(transitLayerGroup)
     }
     })
+}
 
     
   
-}
+
 
 
 
