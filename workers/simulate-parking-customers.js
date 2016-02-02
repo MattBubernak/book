@@ -32,7 +32,7 @@ function simulate() {
 function enter(person) {
     console.log('enter', person)
     // Put this person in the Firebase
-    var ref = new Firebase('https://pizzarollz.firebaseio.com/')
+    var ref = new Firebase('https://pizzarollz.firebaseio.com/customers')
     var taskListRef = ref.child('customers')
     ref.child(person.name).set({
         name: person.name,
@@ -47,7 +47,7 @@ function leave(person) {
         // TODO: remove this person from the Firebase
         // var ref = new Firebase('your-firebase-url')
         // ...
-    var ref = new Firebase('https://pizzarollz.firebaseio.com/')
+    var ref = new Firebase('https://pizzarollz.firebaseio.com/customers')
     var onComplete = function(error) {
         if (error) {
             console.log('Synchronization failed');
@@ -62,7 +62,7 @@ function leave(person) {
 
 function clear() {
     // TODO: remove all people from the Firebase
-    var ref = new Firebase('https://pizzarollz.firebaseio.com/')
+    var ref = new Firebase('https://pizzarollz.firebaseio.com/customers')
     ref.remove()
 }
 // clear the firebase, so that the simulation always starts from no one
