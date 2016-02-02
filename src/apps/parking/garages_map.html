@@ -107,38 +107,48 @@ var customerLayerGroup = L.layerGroup()
 // add the makers layer group to the map
 customerLayerGroup.addTo(map)
 
-F
+
 function drawBuses(transit){
-  console.log(transit)
   transitLayerGroup.clearLayers()
 
-  var type = "bus"
   var busMark = "bus.png"
-
-  var transitMarker = L.Icon.Default.extend({
+  var trainMark = "train.png"
+  var transitMarkerBus = L.Icon.Default.extend({
       options: {
       iconUrl: busMark,
       shadowSize: [0,0]
     }
   })
+  var transitMarkerTrain = L.Icon.Default.extend({
+      options: {
+      iconUrl: trainMark,
+      shadowSize: [0,0]
+    }
+  })
 
-    _.forEach(transit, function(tran) {
-    var buses = tran.id
-    var lat = tran.lat
-    var lon = tran.lon
-    var latlon = [lat, lon]
-    var speed = tran.speedKmHr
-    type = tran.vtype
+    // Artificially reduced count so that computer's don't explode. 
+    if (tran.id%10 == 0)
+    {
+      var buses = tran.id
+      var lat = tran.lat
+      var lon = tran.lon
+      var latlon = [lat, lon]
+      var speed = tran.speedKmHr
+      var type = tran.vtype
 
-    if (type == "bus")
-    {busMark ="bus.png"}
-    else
-    {busMark = "train.png"}
+      if (type == "bus"){
+        var transitIcon = new transitMarkerBus();
+      }
+      else
+      {
+        var transitIcon = new transitMarkerTrain();
+      }
 
-
-    var transitIcon = new transitMarker();
-    L.marker(latlon, {icon:transitIcon}).bindPopup('<b>' + buses + '</b><br > ' + speed + ', ' + type).addTo(transitLayerGroup)
+      L.marker(latlon, {icon:transitIcon}).bindPopup('<b>' + buses + '</b><br > ' + speed + ', ' + type).addTo(transitLayerGroup)
+    }
     })
+
+    
   
 }
 
