@@ -65,7 +65,7 @@ var ref = new Firebase('https://publicdata-parking.firebaseio.com');
 var data
 
 // read data from the location san_francisco/garages, only once
-ref.child('san_francisco/garages').once('value', function(snapshot){
+ref.child('san_francisco/garages').on('value', function(snapshot){
   data = snapshot.val()
 
   var garages = _.filter(data, function(d){
@@ -90,6 +90,12 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 var markersLayerGroup = L.layerGroup()
 // add the makers layer group to the map
 markersLayerGroup.addTo(map)
+
+// create a layer group to hold all the markers
+var customerLayerGroup = L.layerGroup()
+// add the makers layer group to the map
+customerLayerGroup.addTo(map)
+
 
 // parseTime Courtesy of stack overflow: http://stackoverflow.com/questions/141348/what-is-the-best-way-to-parse-a-time-into-a-date-object-from-user-input-in-javas
 function parseTime(timeString) {
@@ -237,16 +243,58 @@ function drawGarages(garages){
       
     if (getRate(garage.rates) == getRate(cheapestLot.rates))
     {
-      L.marker(latlng, {icon: costIcon}).bindLabel(name + " has a min cost: $" +minCost).addTo(map);
+      L.marker(latlng, {icon: costIcon}).bindLabel(name + " has a min cost: $" +minCost).addTo(markersLayerGroup);
     }
     if (garage == biggestSpot)
     {
-      L.marker(latlng, {icon: bigIcon}).bindLabel(name + " has the most spots: " + maxCapacity).addTo(map);
+      L.marker(latlng, {icon: bigIcon}).bindLabel(name + " has the most spots: " + maxCapacity).addTo(markersLayerGroup);
     }
 
   })
 
 }
+
+
+// create a firebase reference to the root
+var ref = new Firebase('https://pizzarollz.firebaseio.com');
+
+var customersData
+
+
+// read data from the location san_francisco/garages, only once
+ref.child('/').on('value', function(snapshot){
+  console.log("hi");
+  customersData = snapshot.val()
+  drawCustomers(customersData)
+})
+
+function drawCustomers(customers){
+  console.log("CUSTOMERS:" + customers)
+  customerLayerGroup.clearLayers()
+  // Create a marker for da peoplez. 
+   var PersonMarker = L.Icon.Default.extend({
+      options: {
+            iconUrl: 'person.png', 
+            shadowSize: [0,0]
+      }
+   })
+
+   // Draw the pplz!
+  _.forEach(customers, function(customer){
+
+    // Extract the needed information. 
+    var latlng = [Number(customer.lat), Number(customer.lon)]
+    var name = customer.name
+    var duration = customer.duration
+
+    // Draw a marker for this ppl. 
+    var personIcon = new PersonMarker();
+
+    L.marker(latlng,{icon: personIcon}).bindLabel(name).addTo(customerLayerGroup);
+  })
+
+}
+
 
       </script>
     </body>
