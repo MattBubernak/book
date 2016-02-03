@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
   <head>
     <meta charset="UTF-8" />
@@ -46,25 +46,14 @@
         $('#navbar').get(0)
       );
 
-      var GARAGE_NAME = 'Golden Gateway Garage'
-      
 
-      var garage = {name: 'something'}
+	 var members = [{fname: 'Matt',lname: 'Bubernak',githubid: 'MattBubernak',major: 'computer science',year: 'Senior'}, {fname: 'Brooke', lname:'Robinson',githubid: 'brobinson124' ,major: 'computer science',year: 'Senior'}, {fname: 'Sophie', lname: 'Yun Zhou',githubid:'sophyzhou' ,major: 'computer science',year: 'Senior'},{fname: 'Andrew', lname: 'Krodinger',githubid:'drewdinger',major: 'computer science',year: 'Senior'}]
 
-      // make a jQuery call to load the garages data
-      console.log('making ajax call')
-      $.ajax({dataType: "json",url:'garages.snapshot.json'})
-        .success(function(garages) {
+	      ReactDOM.render(
+	        <MyComponents.Team members={members}/>,
+	        $('#team').get(0)
+	      );
 
-          console.log('garages:', garages)
-          ReactDOM.render(
-            <MyComponents.Garage garage={garages[GARAGE_NAME]}/>,
-            $('#garage').get(0)
-          )
-
-        }).error( function(XMLHttpRequest, textStatus, errorThrown) { 
-        console.log("Status: " + textStatus); console.log("Error: " + errorThrown)}) 
-        
-    </script>
+		</script>
   </body>
 </html>
