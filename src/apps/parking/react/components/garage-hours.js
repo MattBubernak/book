@@ -10,16 +10,18 @@ MyComponents.Hour = React.createClass({
       else {var to = <li>{'TO: '+ this.props.hour.TO}</li>}
 
     return (
-      <div className="card">
-        <div className="card-content">
-          <ul>
-          {beg}
-          {end}
-          {from}
-          {to}
-          </ul>
-        </div>
-      </div>
+      // <div className="card">
+      //   <div className="card-content">
+      //     <ul>
+      //     {beg}
+      //     {end}
+      //     {from}
+      //     {to}
+      //     </ul>
+      //   </div>
+      // </div>
+      <li className="collection-item">{beg} {end} {from} {to}</li>
+
     );
   }
 });
@@ -33,12 +35,12 @@ MyComponents.GarageHours = React.createClass({
     })
 
     return (
-      <div className="card">
-        <div className="card-content">
-          <h3>Hour Information</h3>
-
-          { hours }
-
+      <div className="card black lighten">
+        <div className="card-content white-text">
+          <span className="card-title">Hours</span>
+            <ul className="collection black-text">
+              {hours}
+            </ul>
         </div>
       </div>
     );

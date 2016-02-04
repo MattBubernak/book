@@ -1,11 +1,9 @@
 MyComponents.GarageTitle = React.createClass({
   render: function() {
     return (
-      <div className="card">
-        <div className="card-content">
-          <h1>{this.props.title}</h1>          
-        </div>
-      </div>
+ 	<span className="card-title activator grey-text text-darken-4">{this.props.title}<i className="material-icons right">{this.props.icon}</i></span>
+
     );
   }
 });
+

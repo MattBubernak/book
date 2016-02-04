@@ -12,18 +12,20 @@ MyComponents.Rate = React.createClass({
       else {var rr = <li>{'RR: '+ this.props.rate.RR}</li>}
 
     return (
-      <div className="card">
-        <div className="card-content">
-          <ul>
-            <li>{'RATE: $' + this.props.rate.RATE}</li>
-            {beg}
-            {end}
-            {desc}
-            {rq}
-            {rr}
-          </ul>
-        </div>
-      </div>
+      // <div className="card">
+      //   <div className="card-content">
+      //     <ul>
+      //       <li>{'RATE: $' + this.props.rate.RATE}</li>
+      //       {beg}
+      //       {end}
+      //       {desc}
+      //       {rq}
+      //       {rr}
+      //     </ul>
+      //   </div>
+      // </div>
+      <li className="collection-item">{beg} {end} {desc} {rq} {rr}</li>
+
     );
   }
 });
@@ -37,12 +39,12 @@ MyComponents.GarageRates = React.createClass({
     })
 
     return (
-      <div className="card">
-        <div className="card-content">
-          <h3>Rate Information</h3>
-
-          { rates }
-
+      <div className="card black lighten">
+        <div className="card-content white-text">
+          <span className="card-title">Rates</span>
+            <ul className="collection black-text">
+              {rates}
+            </ul>
         </div>
       </div>
     );
