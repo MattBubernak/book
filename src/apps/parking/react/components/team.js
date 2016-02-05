@@ -18,10 +18,10 @@ MyComponents.Team = React.createClass({
     })
 
     return (
-      <div className="card">
+      <div className="card blue-grey darken">
 
         <div className="card-content">
-          <span className="card-title">Team Members</span>
+          <span className="card-title white-text">Team Members</span>
           <div className="collection">
             {members}
           </div>

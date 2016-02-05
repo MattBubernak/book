@@ -15,6 +15,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   </head>
+  
+  <style>
+      html {
+        background: url(Free_Parking.jpg) no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+    </style>
+
   <body>
     <div class="container">
       <div id="navbar"></div>
@@ -47,7 +58,7 @@
       );
 
 
-	 var members = [{fname: 'Matt',lname: 'Bubernak',githubid: 'MattBubernak',major: 'Computer Science',year: 'Grad Student M.S.'}, {fname: 'Brooke', lname:'Robinson',githubid: 'brobinson124' ,major: 'Computer Science B.S.',year: 'Junior'}, {fname: 'Sophie', lname: 'Yun Zhou',githubid:'sophyzhou' ,major: 'Computer Science B.S.',year: 'Senior'},{fname: 'Andrew', lname: 'Krodinger',githubid:'drewdinger',major: 'Computer Science B.S.',year: 'Senior'}]
+	 var members = [{fname: 'Matt',lname: 'Bubernak',githubid: 'MattBubernak',major: 'Computer Science MS',year: 'Grad Student'}, {fname: 'Brooke', lname:'Robinson',githubid: 'brobinson124' ,major: 'Computer Science B.S.',year: 'Junior'}, {fname: 'Sophie', lname: 'Yun Zhou',githubid:'sophyzhou' ,major: 'Computer Science B.S.',year: 'Senior'},{fname: 'Andrew', lname: 'Krodinger',githubid:'drewdinger',major: 'Computer Science B.S.',year: 'Senior'}]
 
 	      ReactDOM.render(
 	        <MyComponents.Team members={members}/>,
