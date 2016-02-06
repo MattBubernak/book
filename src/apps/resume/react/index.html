@@ -54,7 +54,7 @@
     <script type="text/babel">
       
       var ref = new Firebase('https://bubernak.firebaseio.com/')
-      //var refTeam = new Firebase('https://ucdd2bookuno.firebaseio.com')
+      var refTeam = new Firebase('https://ucdd2bookuno.firebaseio.com')
 
       ReactDOM.render(
         <MyComponents.NavBar/>,
@@ -67,12 +67,7 @@
       );
 
       // TODO: load tasks data from Firebase
-      var tasks = [{name: 'go to the movies'}, {name: 'sleep'}]
-
-      ReactDOM.render(
-        <MyComponents.TaskList tasks={tasks}/>,
-        $('#tasks').get(0)
-      );
+      var tasks = []
 
       // TODO: load city weather data from Firebase
       var cities = [{name: 'Austin'}, {name: 'New York'}]
@@ -91,6 +86,23 @@
           ReactDOM.render(
             <MyComponents.SkillList skills={skills}/>,
             $('#skills').get(0)
+          );
+        })
+
+// Grab the tasks information
+        refTeam.child('todos/').on('value', function(snapshot){
+          var tasksDB = snapshot.val()
+          console.log(tasksDB)
+          $('#tasks').empty()
+          for( var key in tasksDB){ 
+            var curTask = tasksDB[key];
+            if (curTask.assigned == "MattBubernak")
+            {tasks.push(curTask)}
+          }
+
+          ReactDOM.render(
+            <MyComponents.TaskList tasks={tasks}/>,
+            $('#tasks').get(0)
           );
         })
 
