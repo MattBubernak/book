@@ -82,7 +82,7 @@
           );
         })
 
-      weatherRef.once('value', function(snapshot){
+      weatherRef.on('value', function(snapshot){
         var citiesDB = snapshot.val()
         //console.log(citiesDB)
         var cities = []

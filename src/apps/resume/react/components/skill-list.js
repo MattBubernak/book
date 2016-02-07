@@ -3,8 +3,8 @@ MyComponents.Skill = React.createClass({
   render: function() {
     return (
         <li>
-        <b>Name: </b>{this.props.skill.name} 
-        <br>Years:{this.props.skill.years}</br>
+        <b>{this.props.skill.name}</b>
+        <br>Years: {this.props.skill.years}</br>
         </li>
     );
   }
