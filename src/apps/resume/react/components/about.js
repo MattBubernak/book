@@ -5,7 +5,7 @@ MyComponents.About = React.createClass({
       <div className="card">
         <div className="card-content">
           <div className="row">
-            <div className="col s2">
+            <div className="col s3">
               <div class="row about-me-face">
                   <img src="img/face3.jpg" class="img-circle" alt="Cinque Terre" width="150" height="150"/>
               </div>
@@ -21,7 +21,7 @@ MyComponents.About = React.createClass({
                 <li><b>Github URL:</b> <a href="https://github.com/MattBubernak">www.github.com/MattBubernak</a></li>
               </ul>
             </div>
-            <div className="col s3">
+            <div className="col s2">
               
             </div>
           </div>  

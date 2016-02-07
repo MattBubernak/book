@@ -52,7 +52,8 @@
 
     <!-- render react components -->
     <script type="text/babel">
-      
+      var weatherRef = new Firebase('https://publicdata-weather.firebaseio.com');
+
       var ref = new Firebase('https://bubernak.firebaseio.com/')
       var refTeam = new Firebase('https://ucdd2bookuno.firebaseio.com')
 
@@ -70,17 +71,9 @@
       var tasks = []
 
       // TODO: load city weather data from Firebase
-      var cities = [{name: 'Austin'}, {name: 'New York'}]
-
-      ReactDOM.render(
-        <MyComponents.CityList cities={cities}/>,
-        $('#cities').get(0)
-      );
 
 
       // TODO: load skill data from Firebase
-      var skillsOld = [{name: 'JavaScript', years: 5}, {name: 'Karate', years: 2}]
-      var skills = []
       ref.child('resume/SkillsReact').once('value', function(snapshot){
           var skills = snapshot.val()
           ReactDOM.render(
@@ -89,10 +82,25 @@
           );
         })
 
+      weatherRef.once('value', function(snapshot){
+        var citiesDB = snapshot.val()
+        //console.log(citiesDB)
+        var cities = []
+        for(var key in citiesDB){ 
+            if (key == "seattle" || key == "denver" || key == "portland" || key == "washington" || key == "phoenix")
+            {var curCity = citiesDB[key]
+            curCity.name = key
+            cities.push(curCity)}
+          }
+        ReactDOM.render(
+          <MyComponents.CityList cities={cities}/>,
+          $('#cities').get(0)
+        );
+      })
+
 // Grab the tasks information
         refTeam.child('todos/').on('value', function(snapshot){
           var tasksDB = snapshot.val()
-          console.log(tasksDB)
           $('#tasks').empty()
           for( var key in tasksDB){ 
             var curTask = tasksDB[key];
