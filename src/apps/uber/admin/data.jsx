@@ -1,3 +1,5 @@
+const { Map, TileLayer, Marker, Popup } = window.ReactLeaflet;
+
 // a single 'data' object that holds the data of your entire app, with initial values
 var data = {
   center: [37.78, -122.41], // San Francisco
@@ -24,7 +26,9 @@ function render(){
 // DATA
 //
 
-var firebaseRef = new Firebase('https://ucdd2-book.firebaseio.com/uber')
+var firebaseRef = new Firebase('https://bettybook.firebaseio.com/Uber')
+
+
 
 // Real-time Data (load constantly on changes)
 firebaseRef.child('users')
@@ -39,7 +43,8 @@ firebaseRef.child('users')
 firebaseRef.child('providers')
   .on('value', function(snapshot){
 
-    data.providers = _.values(snapshot.val())
+	var name = snapshot.val().name
+    data.providers += _.values(name)
 
     render()
 
