@@ -21,7 +21,7 @@
 	
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/leaflet.js"></script>
     <!-- https://github.com/PaulLeCam/react-leaflet -->
     <script src="https://npmcdn.com/react-leaflet/dist/react-leaflet.min.js"></script>
@@ -36,9 +36,17 @@
 
   </head>
   <body>
- 
+     <nav>
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">Roar Team</a>
+        <ul class="right hide-on-med-and-down">
+		  <li><a href="#">Providers</a></li>
+          <li ><a href="subscribe.html">Clients</a></li>
+          
+        </ul>
+      </div>
+    </nav>
     <div id="app-container" class="container">
-	<div id="map" style="height:500px"></div>
     </div>
 
     <script>
@@ -50,6 +58,7 @@
     <!-- The order is important. Dependencies must be loaded first -->
     <script type="text/babel" src="components/user-list.jsx"></script>
     <script type="text/babel" src="components/user-map.jsx"></script>
+
     <script type="text/babel" src="components/provider-list.jsx"></script>
     <script type="text/babel" src="components/provider-map.jsx"></script>
 
