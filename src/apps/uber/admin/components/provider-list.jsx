@@ -8,7 +8,7 @@ class ProviderList extends React.Component {
 				<div>
       			 <p><i className="small material-icons">info_outline</i>{p.name}</p>
 				 <p> Selling product: {p.vendor}</p>
-				 <p> Service Time: {p.serviceTime}</p>
+				 <p> Service Time: 10:00AM-5:00PM</p>
 				 </div>
 		);
 	})
