@@ -5,7 +5,8 @@ class ProviderMap extends React.Component {
     const providerElements = this.props.users.map( function(u,i){
       return <Marker position={u.pos} >
         <Popup>
-          <span>{u.name}</span>
+          <span>{u.name}-{u.vendor} <br />
+		  {u.serviceTime}</span>
         </Popup>
       </Marker>
     })

@@ -43,8 +43,7 @@ firebaseRef.child('users')
 firebaseRef.child('providers')
   .on('value', function(snapshot){
 
-	var name = snapshot.val().name
-    data.providers += _.values(name)
+    data.providers = _.values(snapshot.val())
 
     render()
 
