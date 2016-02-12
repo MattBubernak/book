@@ -6,7 +6,7 @@ class ProviderMap extends React.Component {
       return <Marker position={u.pos} >
         <Popup>
           <span>{u.name}-{u.vendor} <br />
-		  {u.serviceTime}</span>
+		  </span>
         </Popup>
       </Marker>
     })
