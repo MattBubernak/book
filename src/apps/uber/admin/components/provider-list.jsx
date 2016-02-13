@@ -15,16 +15,16 @@ class ProviderList extends React.Component {
   
     return (
       <div className="row">
-        <div className="col s12 m10">
-          <div className="card">
+        <div className="col s12">
+          <div className="card black">
 		  <div className="card-image waves-effect waves-block waves-light">
               <img className="activator" src="http://d3dl1v0rc03tp9.cloudfront.net/sites/default/files/food.jpg" height="350" ></img>
             </div>
             <div className="card-content" >
-              <span className="card-title activator grey-text text-darken-4">Provider List<i className="material-icons right">more_vert</i></span>
+              <span className="card-title activator white-text text-darken-4">Provider List<i className="material-icons right">more_vert</i></span>
             </div>
             <div className="card-reveal">
-              <span className="card-title grey-text text-darken-4">Provider List<i className="material-icons right">close</i></span>
+              <span className="card-title white-text">Provider List<i className="material-icons right">close</i></span>
 				{providers}
             </div>
           </div>

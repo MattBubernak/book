@@ -13,8 +13,8 @@ class UserMap extends React.Component {
 
     return (
       <div className="row">
-        <div className="col s12 m10">
-          <div className="card">
+        <div className="col s12">
+          <div className="card black">
 		  <h4>User Map</h4>
 			<Map center={[40.701749, -73.922]} zoom={13}>
       <TileLayer

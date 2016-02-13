@@ -12,16 +12,16 @@ class UserList extends React.Component {
 
     return (
           <div className="row">
-            <div className="col s12 m10">
-              <div className="card">
+            <div className="col s12">
+              <div className="card black">
     		  <div className="card-image waves-effect waves-block waves-light">
                   <img className="activator" src="http://greatwesternfoods.net/images/slideshow/01.jpg" height="350" ></img>
                 </div>
                 <div className="card-content" >
-                  <span className="card-title activator grey-text text-darken-4">User List<i className="material-icons right">more_vert</i></span>
+                  <span className="card-title activator white-text">User List<i className="material-icons right">more_vert</i></span>
                 </div>
                 <div className="card-reveal">
-                  <span className="card-title grey-text text-darken-4">User List<i className="material-icons right">close</i></span>
+                  <span className="card-title white-text">User List<i className="material-icons right">close</i></span>
     				{users}
                 </div>
               </div>
