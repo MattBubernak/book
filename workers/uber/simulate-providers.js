@@ -2,6 +2,20 @@ var _ = require('lodash')
 var random_name = require('node-random-name');
 var Firebase = require('firebase');
 
+
+var express = require('express');
+var app     = express();
+
+app.set('port', (process.env.PORT || 5000));
+
+//For avoidong Heroku $PORT error
+app.get('/', function(request, response) {
+    var result = 'App is running'
+    response.send(result);
+}).listen(app.get('port'), function() {
+    console.log('App is running, server is listening on port ', app.get('port'));
+});
+
 // New York
 var city_location = {
   lat: 40.73,
@@ -68,7 +82,7 @@ function simulate_user(){
 }
 
 function enter_provider(person){
-  console.log('enter person!!!:', person)
+  console.log('enter person:', person)
     var ref = new Firebase('https://team-roar.firebaseio.com/providers')
     var providerListRef = ref.child('providers')
     ref.child(person.name).set({
@@ -83,7 +97,7 @@ function enter_provider(person){
 }
 
 function enter_user(person){
-  console.log('enter user!!!:', person)
+  console.log('enter user:', person)
     var ref = new Firebase('https://team-roar.firebaseio.com/users')
     var userListRef = ref.child('users')
     ref.child(person.name).set({
