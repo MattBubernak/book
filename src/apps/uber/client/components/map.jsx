@@ -16,7 +16,7 @@ class MapView extends React.Component {
 
     return (
       <div className="row">
-        <div className="col s12 m10">
+        <div className="col s12">
           <div className="card">
 		  <h4>Provider Map</h4>
 			<Map center={[40.701749, -73.922]} zoom={13}>
