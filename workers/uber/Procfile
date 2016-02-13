@@ -1,2 +1,1 @@
-worker: node simulate-providers.js -p $PORT
-
+worker: node simulate-providers.js
