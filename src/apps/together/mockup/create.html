@@ -13,78 +13,170 @@
 
     <body>
 	      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
-	  <ul id="teamDropdown" class="dropdown-content">
-	    <li>Matt Bubernak</li>
-	  </ul>
 	  
      <nav class = "black">
       <div class="nav-wrapper">
-        <a href="#" class="brand-logo center">Team Meme</a>
+        <a href="#" class="brand-logo center">WeBuildIt</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><a href="index.html">Home</a></li>
-          <li><a href="create.html">Create</a></li>
-          <li><a href="view.html">View</a></li>
+          <li><a href="create.html">Project</a></li>
+          <li><a href="admin.html">Admin</a></li>
         </ul>
-
-		  <ul class="right hide-on-med-and-down">
-			<li><a class="dropdown-button" href="#!" data-activates="teamDropdown">Team Members<i class="material-icons right">arrow_drop_down</i></a></li>
-		  </ul>	 		
+		
       </div>
      </nav>
 
 
   <div class="container">
+    <!--
+    <div class="row">    
+      <a class="waves-effect waves-light btn"><i class="material-icons left">contacts</i>share url: www.TeamMeme.com/xawetatdatwaif</a>
 
-<div class="col 12">
- <div class="card black">
-    <div class="card-image waves-effect waves-block waves-light">
-      <img class="activator" src="ubercart.jpg">
+      <a class="waves-effect waves-light btn"><i class="material-icons right">play_for_work</i>download</a>
+    </div>-->
+    <div class="row" > 
+      <div class="col s4">
+        <h5>User Working:</h5>
+        <ul>
+          <li><div class="chip">Matt Bubernak</div></li>
+        </ul>
+      </div> 
+      <div class="col s4">
+        <h5>Users Viewing:</h5>
+        <ul>
+          <li><div class="chip">Matt Smith</div></li>
+          <li><div class="chip">Pawel Janas</div></li>
+          <li><div class="chip">Matt Robison</div></li>          
+          <li><div class="chip">Sam Rheins</div></li>
+          <li><div class="chip">Nick Smith</div></li>
+          <li><div class="chip">Jack Drumright</div></li>
+        </ul>
+      </div>
+      <div class="col s4">
+        <h5>Experts Assisting:</h5>
+        <ul>
+          <li><div class="chip">Jonathen Stirk(Mechanic)</div></li>
+          <li><div class="chip">Connor Corn(Mechanic)</div></li>
+          <li><div class="chip">Mark Jenkins(Paint Expert)</div></li>
+        </ul>
+      </div>
+
+      </div>
     </div>
-    <div class="card-content">
-      <span class="card-title activator white-text">Build a meme, together!<i class="material-icons right">more_vert</i></span>
+      <h1 style="text-align:center"> Live Stream</h1>
+    <div class="row" style="margin-left:auto; margin-right:auto; text-align:center">
+      <img src="img/stream.png" width="1000px" ></img>
     </div>
-    <div class="card-reveal">
-      <span class="card-title grey-text text-darken-4"><h4>Who are we?</h4><i class="material-icons right">close</i></span>
-      <p>			<h5>Our Services: </h5>
-						Providing users the ability to share/collaborate on simple memes/comics <br><br>
+    <div class="row">
+      <h1 style="text-align:center"> Updates</h1>
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title"><div class="input-field col s6">
+          <input placeholder="Describe your update" id="first_name" type="text" class="validate">
+          <label for="first_name"></label>
+        </div><div class="chip">
+    <img src="img/nud3.jpg" alt="Contact Person">Matt Bubernak
+  </div></span>
+              <div class="input-field col s12">
+          <textarea id="textarea1" class="materialize-textarea"></textarea>
+          <label for="textarea1">Update Details</label>
+        </div>
+            </div>
+            <div class="card-action">
+              <a href="#">Submit</a>
+            </div>
+          </div>
+        </div>
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Update #3<div class="chip">
+    <img src="img/nud3.jpg" alt="Contact Person">Matt Bubernak
+  </div></span>
+              <p>Things are going well -- going to call it for the night. I'll be back online and working tomorrow.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Reply</a>
+              <a href="#">Like</a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+        <div class="col s12 m12">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Update #2<div class="chip">
+    <img src="img/nud3.jpg" alt="Contact Person">Matt Bubernak
+  </div></span>
+              <p>Thanks for the advice on the wheels. Now I'm doing the side of the car.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Reply</a>
+              <a href="#">Like</a>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+        <div class="col s12 m12">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Update #1<div class="chip">
+    <img src="img/nud3.jpg" alt="Contact Person">Matt Bubernak
+  </div></span>
+              <p>Today I'm going to begin a completely new paint job on my car. It will probably take me about a week, I am hoping for expert advice on how to do the wheels or something.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Reply</a>
+              <a href="#">Like</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h1 style="text-align:center"> Comments</h1>
+      <div class="col s12 m12">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Comment #2 <div class="chip">
+    <img src="img/nud2.jpg" alt="Contact Person">Connor Corn
+  </div></span>
+              <p>Nice work on that paint matt. Have you tried using that new paint on the side? It would look good.</p>
+            </div>
+            <div class="card-action">
+              <a href="#">Reply</a>
+              <a href="#">Like</a>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m12">
+          <div class="card blue-grey darken-1">
+            <div class="card-content white-text">
+              <span class="card-title">Comment #1  <div class="chip">
+    <img src="img/nud.jpg" alt="Contact Person">
+    Mark Jenkins
+  </div></span>
+              <p>Make sure you are safe, chemicals are dangerous. </p>
+            </div>
+            <div class="card-action">
+              <a href="#">Reply</a>
+              <a href="#">Like</a>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="col 12">
+    
 
-					<h5>Who can use our services? </h5>
-						Anyone with a device that can access the internet! <br>
-					 <br><br>
-
-					<h5>What is the price for customers? How we determined our price? </h5>
-						Team Meme is free for all!
-						 <br><br>
-					<br> 
-		<br>
-	</p>
 
     </div>
   </div>
 </div>
 </div>
-
-
-<div class="container">
-    <div class="row">
-			<div class="col 12 m12">
-		 <div class="card black">
-		    <div class="card waves-effect waves-block waves-light">
-		    </div>
-		    <div class="card-content">
-		      <span class="card-title activator white-text">About Us<i class="material-icons right">more_vert</i></span>
-		    </div>
-		    <div class="card-reveal">
-		      <span class="card-title grey-text text-darken-4"><a href="https://github.com/MattBubernak/book">Team Github</a><i class="material-icons right">close</i></span>
-		      <p>This app is created by Matt Bubernak.</p>
-		    </div>
-		  </div>
-		</div>
-    </div>
-</div>
-
-
 
 
 
