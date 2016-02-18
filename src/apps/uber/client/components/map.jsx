@@ -6,7 +6,13 @@ class MapView extends React.Component {
 
 
     const providerElements = this.props.providers.map( function(u,i){
-      return <Marker position={u.pos} >
+            var curIcon = L.icon({
+        iconUrl: '../img/vendor/' + u.vendor + ".png",
+        iconSize: [45, 45]});
+      u.icon=curIcon;
+
+      return <Marker position={u.pos} icon={u.icon} >
+
         <Popup>
           <span>{u.name} <br />
 		  </span>

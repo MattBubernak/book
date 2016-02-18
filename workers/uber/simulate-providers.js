@@ -139,7 +139,7 @@ function leave_provider(person){
 }
 
 function random_vendor_type(){
-  var types = ["Sandwich","Ice Cream","Burgers","Hot Dogs","Gyros"];
+  var types = ["IceCream","Burger","HotDog","Tacos"];
   var index = Math.floor(Math.random() * types.length)
   return types[index]
 }
