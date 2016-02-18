@@ -15,7 +15,10 @@ class App extends React.Component {
             user={this.props.data.user}
             setUserLocationAction={this.props.actions.setUserLocation}/>
       </div>
+      <MyComponents.ProviderList providers={this.props.data.providers}/>
+
     </div>
+
   }
 }
 MyComponents.App = App
