@@ -48,7 +48,7 @@ function simulate_provider(){
   // simulate this person leaving after 'duration' seconds
   setTimeout(function(){
     leave_provider(person)
-  }, duration * 20000)
+  }, duration * 40000)
 
 }
 
@@ -77,8 +77,53 @@ function simulate_user(){
    //simulate this person leaving after 'duration' seconds
   setTimeout(function(){
     leave_user(person)
-  }, duration * 10000)
+  }, duration * 30000)
 
+  //while(keepLooping) {
+    //for (var i = 0; i < 10; i++)
+    //{
+      move_person(person)
+    //}
+  //}
+
+}
+
+function move_person(person){
+ console.log('move', person)
+  var ref = new Firebase('https://team-roar.firebaseio.com/users')
+    var onComplete = function(error) {
+      if (error) {
+        console.log('Synchronization update failed');
+      } else {
+        console.log('Synchronization update succeeded');
+        // Once we see a success, move the person again. 
+        setTimeout(function(){
+          move_person(person)
+        }, 5000)
+
+      }
+    };
+    var changeLat = Math.random() * .002//.001 //Math.floor(Math.random() * 10) -5
+    changeLat *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
+    var changeLon = Math.random() * .002//.001//Math.floor(Math.random() * 10) -5
+    changeLon *= Math.floor(Math.random()*2) == 1 ? 1 : -1;
+    console.log("changeLat: " + changeLat)
+    console.log("changeLon: " + changeLon)
+    ref.child(person.name).once('value',function(snapshot)
+    {
+      var user = snapshot.val()
+      //console.log("GOT:" + user.pos.lat)
+      if (user != null)
+      {
+        ref.child(person.name).update({pos: {
+            lat: user.pos.lat + changeLat,
+            lon: user.pos.lon + changeLon
+          }}, onComplete);
+      }
+    })
+
+
+    //var newProviderRef = providerListRef.push()
 }
 
 function enter_provider(person){
@@ -156,17 +201,17 @@ function clear() {
 clear()
 
 // Generate some providers
-for (var i = 0; i < 5; i++)
+for (var i = 0; i < 10; i++)
 {
   simulate_provider()
 }
 
 // Generate some users. 
-for (var i = 0; i < 30; i++)
+for (var i = 0; i < 40; i++)
 {
   simulate_user()
 }
 
-setInterval(simulate_user, 2000)
-setInterval(simulate_provider, 16000)
+setInterval(simulate_user, 8000)
+setInterval(simulate_provider, 28000)
 

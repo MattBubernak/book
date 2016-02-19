@@ -1,3 +1,5 @@
+const {Map, Marker, CircleMarker, Popup, TileLayer, MapLayer}  = window.ReactLeaflet
+
 class User extends React.Component {
 
   render(){
@@ -5,7 +7,7 @@ class User extends React.Component {
     if (this.props.user){
       // user is authenticated
       return <div>
-    <h5 className="left-align">Hello {this.props.user.displayName}!</h5>
+    <h5 className="left-align">Hello {this.props.user.name}!</h5>
     <a href="#" onClick={this.props.logoutAction}>Logout</a></div>
 } else {
 // user is not set

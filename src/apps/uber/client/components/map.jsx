@@ -3,7 +3,31 @@ const {Map, Marker, CircleMarker, Popup, TileLayer, MapLayer}  = window.ReactLea
 
 class MapView extends React.Component {
   render(){
+    // push in a test user just to see if it works. 
+    var userList = []
+    
+    // once the user logs in actually put in the correct location. 
+    if (this.props.user) {
+      userList = []
+      userList.push(this.props.user)
+    }
+    
+    var filters = this.props.filters
+    
+   
 
+    // show the user's cart. 
+    const userMarker = userList.map( function(u,i){
+      var curIcon = L.icon({
+        iconUrl: "../img/you.png",
+        iconSize: [45, 45]});
+      return <Marker position={u.pos} icon={curIcon} >
+        <Popup>
+          <span>{u.name} <br />
+      </span>
+        </Popup>
+      </Marker>
+    })
 
     const providerElements = this.props.providers.map( function(u,i){
             var curIcon = L.icon({
@@ -11,8 +35,7 @@ class MapView extends React.Component {
         iconSize: [45, 45]});
       u.icon=curIcon;
 
-      return <Marker position={u.pos} icon={u.icon} >
-
+      if (filters[u.vendor]) return <Marker position={u.pos} icon={u.icon} >
         <Popup>
           <span>{u.name} <br />
 		  </span>
@@ -31,7 +54,7 @@ class MapView extends React.Component {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
 				{providerElements}
-
+        {userMarker}
 			  </Map>
           </div>
         </div>
