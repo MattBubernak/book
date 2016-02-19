@@ -3,18 +3,21 @@ const {Map, Marker, CircleMarker, Popup, TileLayer, MapLayer}  = window.ReactLea
 
   
 class UserMap extends React.Component {
-	
- 
+
+
 
   render(){
+  
+	var filters = this.props.filters
     const userElements = this.props.users.map( function(u,i){
+
 
       var curIcon = L.icon({
         iconUrl: '../img/customer/' + u.interest + ".png",
         iconSize: [35, 35]});
       u.icon=curIcon;
 
-      return <Marker position={u.pos} icon={u.icon} opacity="50">
+      if (filters[u.interest]) return <Marker position={u.pos} icon={u.icon} opacity="50">
         <Popup>
           <span>{u.name} wants {u.interest} <br />
 		  {u.serviceTime}</span>
@@ -22,6 +25,7 @@ class UserMap extends React.Component {
       </Marker>
     })
 
+	  
     return (
       <div className="row">
         <div className="col s12">
