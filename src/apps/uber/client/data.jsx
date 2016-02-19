@@ -1,6 +1,6 @@
 // a single 'data' object that holds the data of your entire app, with initial values
 var data = {
-  center: [40.701749, -73.922], // New York
+  center: {lat:40.701749, lon:-73.922}, // New York
   providers: [],
   user: null
 
@@ -65,14 +65,18 @@ actions.login = function(){
 
       // create a user object based on authData
       var user = {
-        displayName: authData.github.displayName,
-        username: authData.github.username,
-        id: authData.github.id,
-        status: 'online',
-        pos: data.center  // position, default to the map center
+        name: authData.github.displayName,
+        //username: authData.github.username,
+        //id: authData.github.id,
+        //status: 'online',
+        pos: data.center,  // position, default to the map center
+        interest: "Burger"
       }
+      console.log("USER:" + user)
+      console.log("User Lon:" + user.pos.lon)
+      console.log("User Lat:" + user.pos.lat)
 
-      var userRef = firebaseRef.child('users').child(user.username)
+      var userRef = firebaseRef.child('users').child(user.name)
 
       // subscribe to the user data
       userRef.on('value', function(snapshot){

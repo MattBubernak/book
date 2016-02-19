@@ -4,7 +4,7 @@ const {Map, Marker, CircleMarker, Popup, TileLayer, MapLayer}  = window.ReactLea
 class MapView extends React.Component {
   render(){
     // push in a test user just to see if it works. 
-    var userList = [{displayName:"tester",pos:[40,-73]}]
+    var userList = []
     
     // once the user logs in actually put in the correct location. 
     if (this.props.user) {
@@ -17,10 +17,9 @@ class MapView extends React.Component {
       var curIcon = L.icon({
         iconUrl: "../img/you.png",
         iconSize: [45, 45]});
-      var curPos = {lat:u.pos[0],lon:u.pos[1]}
-      return <Marker position={curPos} icon={curIcon} >
+      return <Marker position={u.pos} icon={curIcon} >
         <Popup>
-          <span>{u.displayName} <br />
+          <span>{u.name} <br />
       </span>
         </Popup>
       </Marker>
