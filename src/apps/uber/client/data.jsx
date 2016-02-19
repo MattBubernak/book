@@ -3,6 +3,7 @@ var data = {
   center: [40.701749, -73.922], // New York
   providers: [],
   user: null
+
 }
 
 // a single 'handlers' object that holds all the actions of your entire app

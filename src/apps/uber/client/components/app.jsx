@@ -15,6 +15,7 @@ class App extends React.Component {
             user={this.props.data.user}
             setUserLocationAction={this.props.actions.setUserLocation}/>
       </div>
+      <MyComponents.Needs actions={this.props.actions}/>
       <MyComponents.ProviderList providers={this.props.data.providers}/>
 
     </div>
