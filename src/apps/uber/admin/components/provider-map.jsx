@@ -2,12 +2,18 @@ const {Map, Marker, CircleMarker, Popup, TileLayer, MapLayer}  = window.ReactLea
 class ProviderMap extends React.Component {
   render(){
 
+    const userIcon = { 
+
+    }
+
+
     const providerElements = this.props.users.map( function(u,i){
 
       var curIcon = L.icon({
         iconUrl: '../img/vendor/' + u.vendor + ".png",
         iconSize: [45, 40]});
-      u.icon=curIcon;
+        u.icon=curIcon;
+        u.pos={lat:40.701749,lon:-73.922}
       return <Marker position={u.pos} icon={u.icon}>
         <Popup>
           <span>{u.name}-{u.vendor} <br />
@@ -27,7 +33,7 @@ class ProviderMap extends React.Component {
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       />
 				{providerElements}
-
+        {userIcon}
 			  </Map>
           </div>
         </div>

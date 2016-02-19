@@ -48,7 +48,7 @@ function simulate_provider(){
   // simulate this person leaving after 'duration' seconds
   setTimeout(function(){
     leave_provider(person)
-  }, duration * 20000)
+  }, duration * 40000)
 
 }
 
