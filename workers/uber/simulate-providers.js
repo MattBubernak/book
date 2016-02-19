@@ -212,6 +212,6 @@ for (var i = 0; i < 40; i++)
   simulate_user()
 }
 
-setInterval(simulate_user, 10000)
-setInterval(simulate_provider, 32000)
+setInterval(simulate_user, 8000)
+setInterval(simulate_provider, 28000)
 
