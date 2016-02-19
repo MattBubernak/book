@@ -1,10 +1,10 @@
 class ProviderList extends React.Component {
   render(){
   
-	
+	var filters=this.props.filters
 	var providers = this.props.providers.map(function(p, i){
 		var color = "small material-icons"
-		return (
+		if (filters[p.vendor]) return (
 				<div>
       			 <p><img src="../img/vendor/provider.png" width="30" height="30"></img>{p.name}</p>
 				 <p> Selling product: {p.vendor}</p>

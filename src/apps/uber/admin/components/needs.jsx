@@ -2,6 +2,7 @@ class Needs extends React.Component {
     render() {
         return <div id="needs">
             <h4>What do you want to see?</h4>
+			**Click below items to see the maps and lists
             <form action="#">
                 <ul id="items">
                     <div className="row">
