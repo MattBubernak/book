@@ -3,7 +3,7 @@ class App extends React.Component {
     return <div>
       <MyComponents.UserMap users={this.props.data.users}/>
       <MyComponents.UserList users={this.props.data.users}/>
-      <MyComponents.ProviderMap users={this.props.data.providers}/>
+	  <MyComponents.ProviderMap users={this.props.data.providers}/>
       <MyComponents.ProviderList providers={this.props.data.providers}/>
     </div>
   }

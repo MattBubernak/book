@@ -1,6 +1,11 @@
+
 const {Map, Marker, CircleMarker, Popup, TileLayer, MapLayer}  = window.ReactLeaflet
 
+  
 class UserMap extends React.Component {
+	
+ 
+
   render(){
     const userElements = this.props.users.map( function(u,i){
 
@@ -20,8 +25,9 @@ class UserMap extends React.Component {
     return (
       <div className="row">
         <div className="col s12">
-          <div className="card black">
+          <div className="card ">
 		  <h4>User Map</h4>
+				
 			<Map center={[40.701749, -73.922]} zoom={13}>
       <TileLayer
         url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'

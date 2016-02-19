@@ -4,7 +4,7 @@ class UserList extends React.Component {
     var color = "small material-icons"
     		return (
     				<div>
-          			 <p><i className="small material-icons">info_outline</i>{u.name}</p>
+          			 <p><img src="../img/customer/client.png" width="15" height="15"></img>{u.name}</p>
     				 <p> Interested Food: {u.interest}</p>
     				 </div>
     		);
