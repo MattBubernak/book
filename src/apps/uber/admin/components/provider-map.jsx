@@ -11,14 +11,9 @@ class ProviderMap extends React.Component {
 
       var curIcon = L.icon({
         iconUrl: '../img/vendor/' + u.vendor + ".png",
-<<<<<<< HEAD
-        iconSize: [45, 45]});
-      u.icon=curIcon;
-=======
         iconSize: [45, 40]});
         u.icon=curIcon;
         u.pos={lat:40.701749,lon:-73.922}
->>>>>>> origin/master
       return <Marker position={u.pos} icon={u.icon}>
         <Popup>
           <span>{u.name}-{u.vendor} <br />
