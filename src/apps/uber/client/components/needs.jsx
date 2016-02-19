@@ -5,23 +5,23 @@ class Needs extends React.Component {
             <form action="#">
                 <ul id="items">
                     <li>
-                        <input onChange={this.props.actions.needsBurger} type="checkbox" id="s1"/>
+                        <input onChange={this.props.actions.filterUpdateBurger} type="checkbox" id="s1" />
                         <label htmlFor="s1">Burger</label>
                     </li>
                     <li>
-                        <input onChange={this.props.actions.needsHotdog} type="checkbox" id="s2"/>
+                        <input onChange={this.props.actions.filterUpdateHotDog} type="checkbox" id="s2" />
                         <label htmlFor="s2">Hot Dog</label>
                     </li>
                     <li>
-                        <input onChange={this.props.actions.needsIceCream} type="checkbox" id="s3"/>
+                        <input onChange={this.props.actions.filterUpdateIceCream} type="checkbox" id="s3" />
                         <label htmlFor="s3">Ice Cream</label>
                     </li>
                     <li>
-                        <input onChange={this.props.actions.needsPizza} type="checkbox" id="s4"/>
+                        <input onChange={this.props.actions.filterUpdatePizza} type="checkbox" id="s4" />
                         <label htmlFor="s4">Pizza</label>
                     </li>
                     <li>
-                        <input onChange={this.props.actions.needsTacos} type="checkbox" id="s5"/>
+                        <input onChange={this.props.actions.filterUpdateTacos} type="checkbox" id="s5" />
                         <label htmlFor="s5">Tacos</label>
                     </li>
                 </ul>

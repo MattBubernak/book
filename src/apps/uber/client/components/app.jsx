@@ -13,6 +13,7 @@ class App extends React.Component {
             providers={this.props.data.providers}
             center={this.props.data.center}
             user={this.props.data.user}
+            filters={this.props.data.filters}
             setUserLocationAction={this.props.actions.setUserLocation}/>
       </div>
       <MyComponents.Needs actions={this.props.actions}/>

@@ -11,6 +11,10 @@ class MapView extends React.Component {
       userList = []
       userList.push(this.props.user)
     }
+    
+    var filters = this.props.filters
+    
+   
 
     // show the user's cart. 
     const userMarker = userList.map( function(u,i){
@@ -31,8 +35,7 @@ class MapView extends React.Component {
         iconSize: [45, 45]});
       u.icon=curIcon;
 
-      return <Marker position={u.pos} icon={u.icon} >
-
+      if (filters[u.vendor]) return <Marker position={u.pos} icon={u.icon} >
         <Popup>
           <span>{u.name} <br />
 		  </span>

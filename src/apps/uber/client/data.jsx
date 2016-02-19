@@ -2,8 +2,8 @@
 var data = {
   center: {lat:40.701749, lon:-73.922}, // New York
   providers: [],
-  user: null
-
+  user: null,
+  filters: {"Pizza":0,"HotDog":0,"Tacos":0,"Burger":0,"IceCream":0}
 }
 
 // a single 'handlers' object that holds all the actions of your entire app
@@ -72,9 +72,6 @@ actions.login = function(){
         pos: data.center,  // position, default to the map center
         interest: "Burger"
       }
-      console.log("USER:" + user)
-      console.log("User Lon:" + user.pos.lon)
-      console.log("User Lat:" + user.pos.lat)
 
       var userRef = firebaseRef.child('users').child(user.name)
 
@@ -92,6 +89,32 @@ actions.login = function(){
     }
   })
 
+}
+
+actions.filterUpdateIceCream = function() {
+  var filter = "IceCream"
+  data.filters[filter] == 1 ? data.filters[filter] = 0 :  data.filters[filter] = 1
+  render()
+}
+actions.filterUpdateBurger = function() {
+  var filter = "Burger"
+  data.filters[filter] == 1 ? data.filters[filter] = 0 :  data.filters[filter] = 1
+  render()
+}
+actions.filterUpdateTacos = function() {
+  var filter = "Tacos"
+  data.filters[filter] == 1 ? data.filters[filter] = 0 :  data.filters[filter] = 1
+  render()
+}
+actions.filterUpdatePizza = function() {
+  var filter = "Pizza"
+  data.filters[filter] == 1 ? data.filters[filter] = 0 :  data.filters[filter] = 1
+  render()
+}
+actions.filterUpdateHotDog = function() {
+  var filter = "HotDog"
+  data.filters[filter] == 1 ? data.filters[filter] = 0 :  data.filters[filter] = 1
+  render()
 }
 
 actions.logout = function(){
