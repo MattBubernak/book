@@ -83,6 +83,8 @@ actions.login = function(){
       // set the user data
       userRef.set(user)
 
+      // Display the user once logging in. 
+      render()
     }
   })
 
