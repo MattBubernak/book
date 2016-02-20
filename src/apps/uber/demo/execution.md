@@ -5,9 +5,13 @@ layout: layout.hbs
 # Execution
 
 ## Clients
-* We added the ability to filter the map by location of food trucks either: Burgers, Hot Dogs, Ice Cream, Pizza and/or Tacos.
+* We added the ability to filter the carts on map by location of food trucks either: Burgers, Hot Dogs, Ice Cream, Pizza and/or Tacos.
 * We added a way for users to change their location on the map using a form.
+	*This involved adding users to the firebaseio once they've logged in through git.
 * We modified our layout for more user friendly experience.
+* The map now uses icons to show different providers
+	*Username are also now displayed on the map with a mouse-over.
+* There is now a providers list that shows active providers.
 
 
 ## Admin
