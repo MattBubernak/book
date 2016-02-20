@@ -10,18 +10,18 @@ layout: layout.hbs
 * Modify how users are added to our firebase to match worker script.
 * Add “change locations” functionality, for the current(logged in) user.
 * Add ability to select food preference.
-* Display user pin.
-* Use different icon to represent different providers.
+* Display user-id on map.
+* Use different icons to represent different food truck providers.
 * Add provider list. (Lily)
 * Filter carts that show up. (Lily)
 * Visual Cleanup / Execution Documentation (Juan)
 
 
 ## Admin
-* Providers and clients show on the same map.
-* Use  different icons/color to present the roles.
+* Providers and clients are shown on the same map.
+* Use  different icons to present the user preferences.
 * Add location information on the information after click icons.
-* Add better way of tracking users.
+	* Add better way of tracking users.
 * Filter on the map of users.
 * Visual Cleanup / Execution Documentation (Juan)
 
