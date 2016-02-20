@@ -13,7 +13,7 @@ class Move extends React.Component {
                 </div>
               </div>
               <button onClick={this.props.actions.updateLocation} class="btn waves-effect waves-light" name="action">Submit
-                <i class="material-icons right">send</i>
+                <i class="material-icons right"></i>
               </button>
         </div>;
     }
