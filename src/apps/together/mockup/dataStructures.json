@@ -1,0 +1,33 @@
+Tables: 
+ 		Projects
+ 		{
+ 			id: double
+ 			ownerID: double
+ 			category: string
+ 		}
+ 		Comments
+ 		{
+ 			id: double
+ 			ownerID: double
+ 			isReply: bool
+ 			replyToID: double
+ 		}
+ 		Updates
+ 		{
+ 			id: double
+ 			ownerID: double
+ 			isReply: bool
+ 			replyToID: double
+ 		}
+ 		Users
+ 		{
+ 			id: double
+ 			userName: string
+ 			firstName: string
+ 			lastName: string
+ 			expert: bool
+ 			expertField: string
+ 			viewingID: double
+ 			viewingStatus: string
+ 			online: bool
+ 		}
