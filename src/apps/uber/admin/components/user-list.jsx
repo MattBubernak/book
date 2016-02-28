@@ -1,14 +1,17 @@
 class UserList extends React.Component {
   render(){
+	var filters=this.props.filters
+	
   	var users = this.props.users.map(function(u, i){
     var color = "small material-icons"
-    		return (
+    		if (filters[u.interest]) return (
     				<div>
-          			 <p><i className="small material-icons">info_outline</i>{u.name}</p>
+          			 <p><img src="../img/customer/client.png" width="15" height="15"></img>{u.name}</p>
     				 <p> Interested Food: {u.interest}</p>
     				 </div>
     		);
     	})
+
 
     return (
           <div className="row">

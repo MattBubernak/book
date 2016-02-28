@@ -1,12 +1,12 @@
 class ProviderList extends React.Component {
   render(){
   
-	
+	var filters=this.props.filters
 	var providers = this.props.providers.map(function(p, i){
 		var color = "small material-icons"
-		return (
+		if (filters[p.vendor]) return (
 				<div>
-      			 <p><i className="small material-icons">info_outline</i>{p.name}</p>
+      			 <p><img src="../img/vendor/provider.png" width="30" height="30"></img>{p.name}</p>
 				 <p> Selling product: {p.vendor}</p>
 				 <p> Service Time: 10:00AM-5:00PM</p>
 				 </div>
@@ -14,7 +14,7 @@ class ProviderList extends React.Component {
 	})
   
     return (
-      <div className="row">
+      <div className="row" >
         <div className="col s12">
           <div className="card black">
 		  <div className="card-image waves-effect waves-block waves-light">
