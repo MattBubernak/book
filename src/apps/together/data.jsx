@@ -51,7 +51,7 @@ function render(){
 //
 // DATA
 //
-var firebaseRef = new Firebase('https://chattykathyucdd2.firebaseio.com')
+var firebaseRef = new Firebase('https://bubernak.firebaseio.com')
 var chatroomRef = null
 
 function updateChatroom(ref){
@@ -250,6 +250,14 @@ actions.stoppedTyping = function(messegeRef){
   }
   messegeRef.remove()
   return null;
+}
+
+actions.removeMessage = function(chatEntry){
+  var chatRef = firebaseRef.child("chatrooms/"+data.chatroom.name+"/chats/" + chatEntry.id)
+  chatRef.update({
+    text: "<< COMMENT TEXT REMOVED BY ADMIN >>"
+  });
+  render();
 }
 
 actions.upVoteMsg = function(chatEntry){

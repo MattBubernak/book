@@ -2,10 +2,10 @@
   "name": "uber-worker",
   "version": "1.0.0",
   "description": "",
-  "main": "simulate-providers.js",
+  "main": "simulate-together.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node simulate-providers.js"
+    "start": "node simulate-together.js"
   },
   "author": "",
   "license": "ISC",

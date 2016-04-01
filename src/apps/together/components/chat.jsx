@@ -2,7 +2,9 @@ class ChatContent extends React.Component {
   render(){
 
     var curRoom = this.props.data.chatroom;
+    var isAdmin = this.props.data.user.isAdmin
     var actions = this.props.actions
+    console.log("isAdmin:" + isAdmin)
     if(curRoom && (curRoom.chats != null)){
     
       console.log("chatroom", curRoom)  
@@ -21,6 +23,7 @@ class ChatContent extends React.Component {
             profilePic={chatEntry.profilePic} 
             actions={actions} 
             chatEntry={chatEntry}
+            isAdmin={isAdmin}
           />
           );
         }
