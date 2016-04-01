@@ -71,8 +71,10 @@ useful ideas.
   * Users can add embeded media content from youtube, vimeo, soundcloud, etc. to a special media section of the chat room.
   * Users can watch or listen to this media together in realtime and chat about them.
 
-* Andrew
-  * (TODO)
+* Andrew Krodinger
+  * Can chat with multiple users.
+  * Login with github.
+  * Send a private message.
 
 ## Plan
 
@@ -82,11 +84,11 @@ efforts may be required from your team to develop the together app.
 
 * What existing components of the uber app your team can reuse?
 
-We are able to resuse the Nav Bar as well as the login code. Aspects of our firebase structure will remain the same, such as adding logged-in users via github, but even there we can expect some minor adjustments. Most everything else is going to have to be developed from scratch though.
+We are able to resuse the Nav Bar as well as the login code. Most everything else is going to have to be developed from scratch though.
 
 * What new components and features your team may need to build?
 
-We will need to build all the framework as well as each of the components for the chat. We will need a text submission box, a chat box, a topic box, a way to create a new topic, an admin page to block users and view users, components for chat, and the firebase to store all the data. 
+We will need to build all the framework as well as each of the components for the chat. We will need a text submission box, a chat box, a topic box, a way to create a new topic, an admin page to block users and view users, components for chat, and the firebase to store all the data. We will need to consider how to store these chat artifacts in our database as well(I.E. associating chat lines with scores with chat windows)
 
 * What new skills your team will still need to acquire?
 
