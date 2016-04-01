@@ -2,7 +2,7 @@ class BannedList extends React.Component {
   render(){
       console.log(this.props)
       var func = this.props.actions.unBanUser
-      var users = this.props.data.map(function(p,i){
+      var users = this.props.data.users.map(function(p,i){
 
           if (p.isBlocked && !p.isAdmin){
             var imgUrl = "images/online-" + p.isLoggedin + ".png";
@@ -34,7 +34,7 @@ MyComponents.BannedList = BannedList
 
 class AdminList extends React.Component {
   render(){
-      var users = this.props.data.map(function(p,i){
+      var users = this.props.data.users.map(function(p,i){
           if (p.isAdmin) {
             var imgUrl = "images/online-" + p.isLoggedin + ".png";
             return (<div className="chip fullWidth">
@@ -63,7 +63,7 @@ class UserList extends React.Component {
       //console.log(this.props.data)
       var func = this.props.actions.banUser
 
-      var users = this.props.data.map(function(p,i){
+      var users = this.props.data.users.map(function(p,i){
           if (!p.isAdmin && !p.isBlocked)
           {
             var imgUrl = "images/online-" + p.isLoggedin + ".png";
@@ -92,7 +92,38 @@ class UserList extends React.Component {
 
 MyComponents.UserList = UserList
 
-class Users extends React.Component {
+
+class ChatRoomList extends React.Component {
+
+  render(){
+      var style = {
+        flex: 1
+      }
+      console.log("CHATROOMS");
+      console.log(this.props.data.chatroomObjs)
+      var func = this.props.actions.deleteRoom
+
+      var chatrooms = this.props.data.chatroomObjs.map(function(p,i){
+            var chatCount = 0; 
+            if ('chats' in p) { chatCount = Object.keys(p.chats).length}
+            return (
+                        <div className="card grey ">
+                          <div className="card-content white-text">
+                            <span className="card-title">{p.name}</span>
+                            <p>Chatroom contains: {chatCount} chats.</p> 
+                          </div>
+                          <div className="card-action">
+                            <a href="#" onClick={() => func(p.name)}>Delete</a>
+                          </div>
+                        </div>
+                      );
+        });
+      return (<view style={style}>{chatrooms}</view>);
+      }
+}
+MyComponents.ChatRoomList = ChatRoomList
+
+class AdminInfo extends React.Component {
   render(){
     console.log("users got:")
     console.log(this.props.data)
@@ -116,9 +147,13 @@ class Users extends React.Component {
             <MyComponents.BannedList data={this.props.data} actions={this.props.actions}/>
           </ul>
         </div>
+        <div className="col s3 white-text">
+          <h3>Chatroom Info</h3>
+          <MyComponents.ChatRoomList data={this.props.data} actions={this.props.actions}/>
+        </div>
       </div>
       );
   }
 }
 
-MyComponents.Users = Users
+MyComponents.AdminInfo = AdminInfo

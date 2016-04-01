@@ -6,6 +6,7 @@ var State = {
 
 var data = {
   chatrooms: [],
+  chatroomObjs: [],
   users: [],
   chatroom: null,
   user: null,
@@ -67,6 +68,21 @@ firebaseRef.child('chatroomNames').on('value', function(ref){
   data.chatrooms = _.values(ref.val())
   
   console.log("Chatroom updated ", data.chatrooms)
+  //for( val x in data.chatrooms){
+    //console.log("Individual ")
+  //}
+  render();
+})
+
+//Get the chatrooms
+firebaseRef.child('chatrooms').on('value', function(ref){
+  console.log("Raw", ref)
+  console.log("Val", ref.val())
+  
+  data.chatroomObjs = _.values(ref.val())
+  
+  console.log("Chatroom Obj updated ", data.chatrooms)
+  render()
   //for( val x in data.chatrooms){
     //console.log("Individual ")
   //}
@@ -250,6 +266,16 @@ actions.stoppedTyping = function(messegeRef){
   }
   messegeRef.remove()
   return null;
+}
+
+actions.deleteRoom = function(roomName){
+  chatroomRef = firebaseRef.child("chatrooms/" + roomName );
+  chatroomRef.remove()
+  console.log("chatroomNames/" + roomName)
+  var chatroomNameRef = firebaseRef.child("chatroomNames/" + roomName);
+  chatroomNameRef.remove()
+
+  render();
 }
 
 actions.removeMessage = function(chatEntry){
