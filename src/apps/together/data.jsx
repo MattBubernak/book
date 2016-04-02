@@ -115,7 +115,7 @@ actions.login = function(){
         displayName: authData.github.displayName,
         userName: authData.github.username,
         id: authData.github.id,
-        isLoggedIn: 'online',
+        isLoggedIn: '1',
         isBlocked: '0',
         isAdmin: '0',
         profilePic: authData.github.profileImageURL

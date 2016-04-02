@@ -4,8 +4,8 @@ class BannedList extends React.Component {
       var func = this.props.actions.unBanUser
       var users = this.props.data.users.map(function(p,i){
 
-          if (p.isBlocked && !p.isAdmin){
-            var imgUrl = "images/online-" + p.isLoggedin + ".png";
+          if (p.isBlocked && !(p.isAdmin == "1")){
+            var imgUrl = "images/online-" + p.isLoggedIn + ".png";
 
             return (<div className="chip fullWidth">
                 <div className="row">
@@ -35,8 +35,8 @@ MyComponents.BannedList = BannedList
 class AdminList extends React.Component {
   render(){
       var users = this.props.data.users.map(function(p,i){
-          if (p.isAdmin) {
-            var imgUrl = "images/online-" + p.isLoggedin + ".png";
+          if (p.isAdmin == "1") {
+            var imgUrl = "images/online-" + p.isLoggedIn + ".png";
             return (<div className="chip fullWidth">
                 <div className="row">
                   <div className="col s1">
@@ -64,9 +64,9 @@ class UserList extends React.Component {
       var func = this.props.actions.banUser
 
       var users = this.props.data.users.map(function(p,i){
-          if (!p.isAdmin && !p.isBlocked)
+          if (!(p.isAdmin == "1") && !p.isBlocked)
           {
-            var imgUrl = "images/online-" + p.isLoggedin + ".png";
+            var imgUrl = "images/online-" + p.isLoggedIn + ".png";
             return (<div className="chip fullWidth">
                 <div className="row">
                   <div className="col s1">
@@ -107,7 +107,7 @@ class ChatRoomList extends React.Component {
             var chatCount = 0; 
             if ('chats' in p) { chatCount = Object.keys(p.chats).length}
             return (
-                        <div className="card grey ">
+                        <div className="card black ">
                           <div className="card-content white-text">
                             <span className="card-title">{p.name}</span>
                             <p>Chatroom contains: {chatCount} chats.</p> 

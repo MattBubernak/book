@@ -9,7 +9,14 @@ class TextBubble extends React.Component {
     var divStyle = {};
 
     // Admin Button
-    if (isAdmin == '1') divStyle = { visibility:hidden }
+    if (isAdmin != '1') {
+      isAdmin = false 
+    }
+    else {
+      isAdmin = true
+    }
+
+
     var attachment;
     if(this.props.attachment) {
       attachment = 
@@ -36,7 +43,7 @@ class TextBubble extends React.Component {
               {this.props.score}
               <a href="#" onClick={() => upVote(this.props.chatEntry)}><b>↑ </b></a>
               <a href="#" onClick={() => downVote(this.props.chatEntry)}><b> ↓</b></a>
-              <a href="#" style={divStyle} onClick={() => removeMessage(this.props.chatEntry)}><b> X</b></a>
+              <a href="#" className={isAdmin ? '' : 'hidden'} onClick={() => removeMessage(this.props.chatEntry)}><b> X</b></a>
             </span>
           </div>
           {attachment}    
