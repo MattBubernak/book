@@ -130,25 +130,25 @@ class AdminInfo extends React.Component {
     return (
       <div className="row userRow">
         <div className="col s3 white-text">
-          <h3>Users</h3>
+          <h3><i className="medium material-icons">supervisor_account</i> Users</h3>
           <ul>
             <MyComponents.UserList data={this.props.data} actions={this.props.actions}/>
           </ul>
         </div>
         <div className="col s3 white-text">
-          <h3>Admins</h3>
+          <h3><i className="medium material-icons">settings</i> Admins</h3>
           <ul>
             <MyComponents.AdminList data={this.props.data} actions={this.props.actions}/>
           </ul>
         </div>
         <div className="col s3 white-text">
-          <h3>Banned</h3>
+          <h3><i className="medium material-icons">lock</i> Banned</h3>
           <ul>
             <MyComponents.BannedList data={this.props.data} actions={this.props.actions}/>
           </ul>
         </div>
         <div className="col s3 white-text">
-          <h3>Chatroom Info</h3>
+          <h3><i className="medium material-icons">chat</i> Chatroom Info</h3>
           <MyComponents.ChatRoomList data={this.props.data} actions={this.props.actions}/>
         </div>
       </div>

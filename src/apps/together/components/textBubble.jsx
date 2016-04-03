@@ -6,6 +6,7 @@ class TextBubble extends React.Component {
     var downVote = this.props.actions.downVoteMsg
     var removeMessage = this.props.actions.removeMessage
     var isAdmin = this.props.isAdmin
+    var isTyping = this.props.isTyping
     var divStyle = {};
 
     // Admin Button
@@ -15,6 +16,10 @@ class TextBubble extends React.Component {
     else {
       isAdmin = true
     }
+    console.log("isTyping" + isTyping)
+    if (isTyping != 0) {isTyping = true}
+    else { isTyping = false}
+      
 
 
     var attachment;
@@ -40,10 +45,10 @@ class TextBubble extends React.Component {
           </div>
           <div className = "grey-text lighten-2">
             <span className="badge">
-              {this.props.score}
-              <a href="#" onClick={() => upVote(this.props.chatEntry)}><b>↑ </b></a>
-              <a href="#" onClick={() => downVote(this.props.chatEntry)}><b> ↓</b></a>
-              <a href="#" className={isAdmin ? '' : 'hidden'} onClick={() => removeMessage(this.props.chatEntry)}><b> X</b></a>
+              <span className={isTyping ? 'hidden' : ''}>{this.props.score}</span>
+              <a href="#" className={isTyping ? 'hidden' : ''} onClick={() => upVote(this.props.chatEntry)}><b>↑ </b></a>
+              <a href="#" className={isTyping ? 'hidden' : ''} onClick={() => downVote(this.props.chatEntry)}><b> ↓</b></a>
+              <a href="#" className={(isAdmin && !isTyping) ? '' : 'hidden'} onClick={() => removeMessage(this.props.chatEntry)}><b> X</b></a>
             </span>
           </div>
           {attachment}    

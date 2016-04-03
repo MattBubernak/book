@@ -24,6 +24,7 @@ class ChatContent extends React.Component {
             actions={actions} 
             chatEntry={chatEntry}
             isAdmin={isAdmin}
+            isTyping={chatEntry.isTyping}
           />
           );
         }
